@@ -2,6 +2,7 @@ package project_SeatCondition;
 
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -20,6 +21,12 @@ public class SeatManagement extends JPanel{
    	TableStructure pTable1 = new TableStructure();
    	add(pTable1);
    	pTable1.addMouseListener(new MouseAdapter() {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			super.mouseClicked(e);
+		}
+   		
 	});
    	
    	TableStructure pTable2 = new TableStructure();

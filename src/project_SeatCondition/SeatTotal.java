@@ -31,6 +31,7 @@ public class SeatTotal extends JFrame {
 	public SeatTotal() {
 		initComponents();
 	}
+
 	private void initComponents() {
 		setMinimumSize(new Dimension(800, 700));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -39,10 +40,10 @@ public class SeatTotal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+
 		panel = new OrderTitle();
 		contentPane.add(panel, BorderLayout.NORTH);
-		
+
 		panel_1 = new SeatManagement();
 		contentPane.add(panel_1, BorderLayout.CENTER);
 	}

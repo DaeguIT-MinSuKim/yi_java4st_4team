@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -236,7 +237,7 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 		btnMain01.addMouseListener(this);
 		btnMain01.setBackground(Color.LIGHT_GRAY);
 		btnMain01.setBorder(b);		
-		btnMain01.setName("M01");	
+		btnMain01.set	
 		//button01-end
 		
 		btnMain02 = new JButton("<html>갈비탕<br>9,000<html>");
@@ -821,7 +822,11 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 	protected void mousePressedMbtn01(MouseEvent e) {
 		System.out.println("뼈해장국");	// 콘솔창에서 확인
 		moService = new MenuOrderService();		//기능쓰겟다고 선언
+		table.addRow(moList);
 		moService.addMenuOrder(new MenuOrder(btnMain01.getName()));
+		
+		
+		
 		JOptionPane.showMessageDialog(null, "뼈해장국 추가완료");
 		
 		moList = (ArrayList<MenuOrder>) moService.getMenuOrderList();

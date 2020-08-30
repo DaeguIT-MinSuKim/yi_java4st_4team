@@ -8,7 +8,7 @@ import yi_java4st_4team.dto.Menu;
 
 public class MenuService {
 	private MenuDao dao = MenuDaoImpl.getInstance();
-	public void addMau(Menu m) {
+	public void addMenu(Menu m) {
 		dao.intsertMenu(m);
 	}
 	

@@ -34,8 +34,7 @@ public class MenuDaoImpl implements MenuDao {
 				return list;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException();
 		}
 		return null;
 	}

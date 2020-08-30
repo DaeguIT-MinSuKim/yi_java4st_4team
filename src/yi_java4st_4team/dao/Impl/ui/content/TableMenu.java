@@ -30,8 +30,4 @@ public class TableMenu extends AbstractMainTableMenu<Menu>  {
         tableCellAlign(SwingConstants.CENTER, 0, 1);		
 	}
 	
-	
-	
-	
-
 }

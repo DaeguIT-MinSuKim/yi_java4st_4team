@@ -28,6 +28,7 @@ public class Starting extends JFrame {
 	public Starting() {
 		initComponents();
 	}
+	
 	private void initComponents() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 883, 629);

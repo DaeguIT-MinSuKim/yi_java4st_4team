@@ -709,7 +709,7 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 		}				
 	
 		Menu addMainFood = mfList.get(selIdx);
-		mService.addManFood(addMainFood);
+		mService.addMenu(addMainFood);
 		
 //		Assert.assertNotNull(mfList); 				//담긴 배열 확인
 //		mfList.stream().forEach(System.out::println);	//하나씩  출력
@@ -758,7 +758,7 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 			return;
 		}
 		Menu selecteDeleteMainFood = mfList.get(selIdx);
-		mService.selectEditMainFood(selecteDeleteMainFood);
+		mService.removeMainFood(selecteDeleteMainFood);
 		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
 		tableMainFood.setItems(mfList);								//DB 테이블에 저장
 		JOptionPane.showMessageDialog(null, "선택취소 완료");
@@ -859,7 +859,7 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 	protected void mousePressedMbtn03(MouseEvent e) {
 		System.out.println("육개장");
 		mService = new MenuService();
-		mService.addManFood(new Menu(btnMain03.getName()));
+		mService.addMenu(new Menu(btnMain03.getName()));
 		JOptionPane.showMessageDialog(null, "육개장 추가완료");
 		
 		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
@@ -869,7 +869,7 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 	protected void mousePressedMbtn04(MouseEvent e) {
 		System.out.println("제육덮밥");
 		mService = new MenuService();
-		mService.addManFood(new Menu(btnMain04.getName()));
+		mService.addMenu(new Menu(btnMain04.getName()));
 		JOptionPane.showMessageDialog(null, "제육덮밥 추가완료");
 		
 		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
@@ -879,7 +879,7 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 	private void mousePressedbtnSub01(MouseEvent e) {
 		System.out.println("공깃밥");	
 		mService = new MenuService();
-		mService.addManFood(new Menu(btnSub01.getName()));
+		mService.addMenu(new Menu(btnSub01.getName()));
 		JOptionPane.showMessageDialog(null, "공깃밥 추가완료");
 		
 		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
@@ -889,7 +889,7 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 	private void mousePressedbtnSub02(MouseEvent e) {
 		System.out.println("계란찜");
 		mService = new MenuService();
-		mService.addManFood(new Menu(btnSub02.getName()));
+		mService.addMenu(new Menu(btnSub02.getName()));
 		JOptionPane.showMessageDialog(null, "계란찜 추가완료");
 		
 		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
@@ -899,7 +899,7 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 	private void mousePressedbtnSub03(MouseEvent e) {
 		System.out.println("꽁치구이");
 		mService = new MenuService();
-		mService.addManFood(new Menu(btnSub03.getName()));
+		mService.addMenu(new Menu(btnSub03.getName()));
 		JOptionPane.showMessageDialog(null, "꽁치구이 추가완료");
 		
 		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
@@ -909,7 +909,7 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 	private void mousePressedbtnSub04(MouseEvent e) {
 		System.out.println("계란후라이");
 		mService = new MenuService();
-		mService.addManFood(new Menu(btnSub04.getName()));
+		mService.addMenu(new Menu(btnSub04.getName()));
 		JOptionPane.showMessageDialog(null, "계란후라이 추가완료");
 		
 		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
@@ -921,7 +921,7 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 	private void mousePressedbtnBev01(MouseEvent e) {
 		System.out.println("소주");
 		mService = new MenuService();
-		mService.addManFood(new Menu(btnBev01.getName()));
+		mService.addMenu(new Menu(btnBev01.getName()));
 		JOptionPane.showMessageDialog(null, "소주 추가완료");
 		
 		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
@@ -933,7 +933,7 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 	private void mousePressedbtnBev02(MouseEvent e) {
 		System.out.println("맥주");
 		mService = new MenuService();
-		mService.addManFood(new Menu(btnBev02.getName()));
+		mService.addMenu(new Menu(btnBev02.getName()));
 		JOptionPane.showMessageDialog(null, "맥주 추가완료");
 		
 		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
@@ -944,7 +944,7 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 	private void mousePressedbtnBev03(MouseEvent e) {
 		System.out.println("콜라");
 		mService = new MenuService();
-		mService.addManFood(new Menu(btnBev03.getName()));
+		mService.addMenu(new Menu(btnBev03.getName()));
 		JOptionPane.showMessageDialog(null, "콜라주 추가완료");
 		
 		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
@@ -955,7 +955,7 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 	private void mousePressedbtnBev04(MouseEvent e) {
 		System.out.println("사이다");
 		mService = new MenuService();
-		mService.addManFood(new Menu(btnBev04.getName()));
+		mService.addMenu(new Menu(btnBev04.getName()));
 		JOptionPane.showMessageDialog(null, "사이다 추가완료");
 		
 		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언

@@ -24,8 +24,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import yi_java4st_4team.dao.Impl.service.MenuService;
-import yi_java4st_4team.dto.Menu;
+import yi_java4st_4team.dao.Impl.service.MenuOrderService;
+import yi_java4st_4team.dto.MenuOrder;
 
 @SuppressWarnings("serial")
 public class FramePos extends JFrame implements ActionListener, MouseListener  {
@@ -36,10 +36,8 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 	private JPanel panelList;
 	private JTabbedPane tabbedPane;
 	private JScrollPane scrollPane;
-	private ArrayList<Menu> mfList;
-	private MenuService mService;
-	private TableMenu tableMainFood;
-	private Menu mf;
+	private ArrayList<MenuOrder> moList = new ArrayList<MenuOrder>();
+	private MenuOrderService moService;
 	private JPanel panelBtns;
 	private JPanel panelCal;
 	private JPanel panelCompl;
@@ -103,8 +101,9 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 	private JButton btnBev13;
 	private JButton btnBev14;
 	private JButton btnBev15;
-	private JButton btnBev16;
-	private boolean ResultSet;
+	private JButton btnBev16;	
+	private SelectedMenuOrderTable table;
+
 	
 	
 	/**
@@ -127,8 +126,9 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 	 * Create the frame.
 	 */
 	public FramePos() {
-		mService = new MenuService();		//DB 테이블 셋팅
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
+		moService = new MenuOrderService();		//DB 테이블 셋팅
+//		moList = (ArrayList<MenuOrder>) moService.getMenuOrderList();	//DB 테이블 목록 배열로 선언
+		moList.add(new MenuOrder());
 		initComponents();
 	}
 	private void initComponents() {
@@ -138,8 +138,6 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(0, 2, 10, 10));
-		tableMainFood = new TableMenu();
-		tableMainFood.setItems(mfList);
 		
 		panel = new JPanel();
 		contentPane.add(panel);
@@ -152,11 +150,10 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 		
 		scrollPane = new JScrollPane();
 		panelList.add(scrollPane, BorderLayout.CENTER);
-
 		
-//		tableMainFood = new TableMainFood();
-//		tableMainFood.setItems(mfList);			//DB에 있는 목록 불러오기
-		scrollPane.setViewportView(tableMainFood);
+		table = new SelectedMenuOrderTable();	// 테이블 세팅
+		table.setItems(moList);					//DB에 있는 값 불러오기		
+		scrollPane.setViewportView(table);
 		
 		panelBtns = new JPanel();
 		panel.add(panelBtns);
@@ -239,7 +236,7 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 		btnMain01.addMouseListener(this);
 		btnMain01.setBackground(Color.LIGHT_GRAY);
 		btnMain01.setBorder(b);		
-		btnMain01.setName("M01");
+		btnMain01.setName("M01");	
 		//button01-end
 		
 		btnMain02 = new JButton("<html>갈비탕<br>9,000<html>");
@@ -701,67 +698,62 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 		}
 	}
 	protected void actionPerformedBtnPlus(ActionEvent e) {			
-		int selIdx = tableMainFood.getSelectedRow();
-		System.out.println(selIdx);
-		if(selIdx == -1) {
-			JOptionPane.showMessageDialog(null, "해당 항목을 선택해주세요");
-			return;
-		}				
-	
-		Menu addMainFood = mfList.get(selIdx);
-		mService.addMenu(addMainFood);
-		
-//		Assert.assertNotNull(mfList); 				//담긴 배열 확인
-//		mfList.stream().forEach(System.out::println);	//하나씩  출력
-		
-		
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
-		tableMainFood.setItems(mfList);								//DB 테이블에 저장
-		
-		
-		JOptionPane.showMessageDialog(null, "추가완료");
-	
+		/*
+		 * int selIdx = tableMainFood.getSelectedRow(); System.out.println(selIdx);
+		 * if(selIdx == -1) { JOptionPane.showMessageDialog(null, "해당 항목을 선택해주세요");
+		 * return; }
+		 * 
+		 * Menu addMainFood = mofList.get(selIdx); moService.addMenu(addMainFood);
+		 * 
+		 * // Assert.assertNotNull(mfList); //담긴 배열 확인 //
+		 * mfList.stream().forEach(System.out::println); //하나씩 출력
+		 * 
+		 * 
+		 * mofList = (ArrayList<Menu>) moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
+		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
+		 * 
+		 * 
+		 * JOptionPane.showMessageDialog(null, "추가완료");
+		 */
 	}
 	protected void actionPerformedBtnMinus(ActionEvent e) {
-		int selIdx = tableMainFood.getSelectedRow();
-		System.out.println(selIdx);
-		if(selIdx == -1) {
-			JOptionPane.showMessageDialog(null, "해당 항목을 선택해주세요");
-			return;
-		}
-		Menu deleteMainFood = mfList.get(selIdx);
-		mService.removeMainFood(deleteMainFood);
-		
-//		Assert.assertNotNull(mfList); 				//담긴 배열 확인
-//		mfList.stream().forEach(System.out::println);	//하나씩  출력
-		
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
-		tableMainFood.setItems(mfList);								//DB 테이블에 저장
-		
-		
-		JOptionPane.showMessageDialog(null, "삭제완료");
+		/*
+		 * int selIdx = tableMainFood.getSelectedRow(); System.out.println(selIdx);
+		 * if(selIdx == -1) { JOptionPane.showMessageDialog(null, "해당 항목을 선택해주세요");
+		 * return; } Menu deleteMainFood = mofList.get(selIdx);
+		 * moService.removeMainFood(deleteMainFood);
+		 * 
+		 * // Assert.assertNotNull(mfList); //담긴 배열 확인 //
+		 * mfList.stream().forEach(System.out::println); //하나씩 출력
+		 * 
+		 * mofList = (ArrayList<Menu>) moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
+		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
+		 * 
+		 * 
+		 * JOptionPane.showMessageDialog(null, "삭제완료");
+		 */
 		
 	}
 	protected void actionPerformedBtnTotalCancel(ActionEvent e) {	
-		mService.editMainFood(new Menu());
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
-		tableMainFood.setItems(mfList);							//DB 테이블에 저장
-		
-		JOptionPane.showMessageDialog(null, "전체취소 완료");
+		/*
+		 * moService.editMainFood(new Menu()); mofList = (ArrayList<Menu>)
+		 * moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
+		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
+		 * 
+		 * JOptionPane.showMessageDialog(null, "전체취소 완료");
+		 */
 	
 	}
 	protected void actionPerformedBtnSelectedCancel(ActionEvent e) {
-		int selIdx = tableMainFood.getSelectedRow();
-		System.out.println(selIdx);
-		if(selIdx == -1) {
-			JOptionPane.showMessageDialog(null, "해당 항목을 선택해주세요");
-			return;
-		}
-		Menu selecteDeleteMainFood = mfList.get(selIdx);
-		mService.removeMainFood(selecteDeleteMainFood);
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
-		tableMainFood.setItems(mfList);								//DB 테이블에 저장
-		JOptionPane.showMessageDialog(null, "선택취소 완료");
+		/*
+		 * int selIdx = tableMainFood.getSelectedRow(); System.out.println(selIdx);
+		 * if(selIdx == -1) { JOptionPane.showMessageDialog(null, "해당 항목을 선택해주세요");
+		 * return; } Menu selecteDeleteMainFood = mofList.get(selIdx);
+		 * moService.removeMainFood(selecteDeleteMainFood); mofList = (ArrayList<Menu>)
+		 * moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
+		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
+		 * JOptionPane.showMessageDialog(null, "선택취소 완료");
+		 */
 	}	
 	
 	
@@ -828,139 +820,131 @@ public class FramePos extends JFrame implements ActionListener, MouseListener  {
 	//메인메뉴에 대한 버튼기능
 	protected void mousePressedMbtn01(MouseEvent e) {
 		System.out.println("뼈해장국");	// 콘솔창에서 확인
-		mService = new MenuService();		//기능쓰겟다고 선언
-//		mfList = new ArrayList<MainFood>();
-//		mf = new MainFood();
+		moService = new MenuOrderService();		//기능쓰겟다고 선언
+		moService.addMenuOrder(new MenuOrder(btnMain01.getName()));
+		JOptionPane.showMessageDialog(null, "뼈해장국 추가완료");
 		
-		/*
-		 * if(mfList.equals(mf)){ Menu pressedMF = new Menu("M01", "뼈해장국", 6000, 1);
-		 * //입력값 선언! mService.totaldeleteMainFood(mf); //기본 테이블에 null값이어서 입력하기 위한 테이블
-		 * 데이터 삭제 mService.inputMainFood(pressedMF); //첫 데이터는 INSERT INTO, 데이터가 있을 시 카운트
-		 * 업! mfList = (ArrayList<Menu>) mService.getMainFoodList(); //DB 테이블 목록 배열로 선언
-		 * tableMainFood.setItems(mfList); JOptionPane.showMessageDialog(null,
-		 * "뼈해장국 추가완료"); } mService.addManFood(new Menu(btnMain01.getName())); mfList =
-		 * (ArrayList<Menu>) mService.getMainFoodList(); //DB 테이블 목록 배열로 선언
-		 * tableMainFood.setItems(mfList); //DB 테이블에 저장
-		 * JOptionPane.showMessageDialog(null, "뼈해장국 추가완료");
-		 */
+		moList = (ArrayList<MenuOrder>) moService.getMenuOrderList();
+
 			
 		
 	}
 	protected void mousePressedMbtn02(MouseEvent e) {
-		System.out.println("갈비탕");
-		mService = new MenuService();
-		mService.addMenu(new Menu(btnMain02.getName()));
-		JOptionPane.showMessageDialog(null, "갈비탕 추가완료");
-		
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
-		tableMainFood.setItems(mfList);								//DB 테이블에 저장
-
+		/*
+		 * System.out.println("갈비탕"); moService = new MenuService();
+		 * moService.addMenu(new Menu(btnMain02.getName()));
+		 * JOptionPane.showMessageDialog(null, "갈비탕 추가완료");
+		 * 
+		 * mofList = (ArrayList<Menu>) moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
+		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
+		 */
 	}
 	protected void mousePressedMbtn03(MouseEvent e) {
-		System.out.println("육개장");
-		mService = new MenuService();
-		mService.addMenu(new Menu(btnMain03.getName()));
-		JOptionPane.showMessageDialog(null, "육개장 추가완료");
-		
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
-		tableMainFood.setItems(mfList);								//DB 테이블에 저장
-
+		/*
+		 * System.out.println("육개장"); moService = new MenuService();
+		 * moService.addMenu(new Menu(btnMain03.getName()));
+		 * JOptionPane.showMessageDialog(null, "육개장 추가완료");
+		 * 
+		 * mofList = (ArrayList<Menu>) moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
+		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
+		 */
 	}
 	protected void mousePressedMbtn04(MouseEvent e) {
-		System.out.println("제육덮밥");
-		mService = new MenuService();
-		mService.addMenu(new Menu(btnMain04.getName()));
-		JOptionPane.showMessageDialog(null, "제육덮밥 추가완료");
-		
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
-		tableMainFood.setItems(mfList);								//DB 테이블에 저장							
-	}
+		/*
+		 * System.out.println("제육덮밥"); moService = new MenuService();
+		 * moService.addMenu(new Menu(btnMain04.getName()));
+		 * JOptionPane.showMessageDialog(null, "제육덮밥 추가완료");
+		 * 
+		 * mofList = (ArrayList<Menu>) moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
+		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
+		 */	}
 	
 	private void mousePressedbtnSub01(MouseEvent e) {
-		System.out.println("공깃밥");	
-		mService = new MenuService();
-		mService.addMenu(new Menu(btnSub01.getName()));
-		JOptionPane.showMessageDialog(null, "공깃밥 추가완료");
-		
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
-		tableMainFood.setItems(mfList);								//DB 테이블에 저장
-		
+		/*
+		 * System.out.println("공깃밥"); moService = new MenuService();
+		 * moService.addMenu(new Menu(btnSub01.getName()));
+		 * JOptionPane.showMessageDialog(null, "공깃밥 추가완료");
+		 * 
+		 * mofList = (ArrayList<Menu>) moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
+		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
+		 */		
 	}
 	private void mousePressedbtnSub02(MouseEvent e) {
-		System.out.println("계란찜");
-		mService = new MenuService();
-		mService.addMenu(new Menu(btnSub02.getName()));
-		JOptionPane.showMessageDialog(null, "계란찜 추가완료");
-		
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
-		tableMainFood.setItems(mfList);								//DB 테이블에 저장
-		
+		/*
+		 * System.out.println("계란찜"); moService = new MenuService();
+		 * moService.addMenu(new Menu(btnSub02.getName()));
+		 * JOptionPane.showMessageDialog(null, "계란찜 추가완료");
+		 * 
+		 * mofList = (ArrayList<Menu>) moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
+		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
+		 */		
 	}
 	private void mousePressedbtnSub03(MouseEvent e) {
-		System.out.println("꽁치구이");
-		mService = new MenuService();
-		mService.addMenu(new Menu(btnSub03.getName()));
-		JOptionPane.showMessageDialog(null, "꽁치구이 추가완료");
-		
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
-		tableMainFood.setItems(mfList);								//DB 테이블에 저장
-		
+		/*
+		 * System.out.println("꽁치구이"); moService = new MenuService();
+		 * moService.addMenu(new Menu(btnSub03.getName()));
+		 * JOptionPane.showMessageDialog(null, "꽁치구이 추가완료");
+		 * 
+		 * mofList = (ArrayList<Menu>) moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
+		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
+		 */		
 	}
 	private void mousePressedbtnSub04(MouseEvent e) {
-		System.out.println("계란후라이");
-		mService = new MenuService();
-		mService.addMenu(new Menu(btnSub04.getName()));
-		JOptionPane.showMessageDialog(null, "계란후라이 추가완료");
-		
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
-		tableMainFood.setItems(mfList);								//DB 테이블에 저장
-		
+		/*
+		 * System.out.println("계란후라이"); moService = new MenuService();
+		 * moService.addMenu(new Menu(btnSub04.getName()));
+		 * JOptionPane.showMessageDialog(null, "계란후라이 추가완료");
+		 * 
+		 * mofList = (ArrayList<Menu>) moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
+		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
+		 */		
 	}
 	
 
 	private void mousePressedbtnBev01(MouseEvent e) {
-		System.out.println("소주");
-		mService = new MenuService();
-		mService.addMenu(new Menu(btnBev01.getName()));
-		JOptionPane.showMessageDialog(null, "소주 추가완료");
-		
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
-		tableMainFood.setItems(mfList);								//DB 테이블에 저장
-		
+		/*
+		 * System.out.println("소주"); moService = new MenuService();
+		 * moService.addMenu(new Menu(btnBev01.getName()));
+		 * JOptionPane.showMessageDialog(null, "소주 추가완료");
+		 * 
+		 * mofList = (ArrayList<Menu>) moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
+		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
+		 */		
 		
 	}
 
 	private void mousePressedbtnBev02(MouseEvent e) {
-		System.out.println("맥주");
-		mService = new MenuService();
-		mService.addMenu(new Menu(btnBev02.getName()));
-		JOptionPane.showMessageDialog(null, "맥주 추가완료");
-		
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
-		tableMainFood.setItems(mfList);								//DB 테이블에 저장
+		/*
+		 * System.out.println("맥주"); moService = new MenuService();
+		 * moService.addMenu(new Menu(btnBev02.getName()));
+		 * JOptionPane.showMessageDialog(null, "맥주 추가완료");
+		 * 
+		 * mofList = (ArrayList<Menu>) moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
+		 * tableMainFood.setItems(mofList);
+		 */								//DB 테이블에 저장
 		
 	}
 
 	private void mousePressedbtnBev03(MouseEvent e) {
-		System.out.println("콜라");
-		mService = new MenuService();
-		mService.addMenu(new Menu(btnBev03.getName()));
-		JOptionPane.showMessageDialog(null, "콜라주 추가완료");
-		
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
-		tableMainFood.setItems(mfList);								//DB 테이블에 저장
-		
+		/*
+		 * System.out.println("콜라"); moService = new MenuService();
+		 * moService.addMenu(new Menu(btnBev03.getName()));
+		 * JOptionPane.showMessageDialog(null, "콜라주 추가완료");
+		 * 
+		 * mofList = (ArrayList<Menu>) moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
+		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
+		 */
 	}
 
 	private void mousePressedbtnBev04(MouseEvent e) {
-		System.out.println("사이다");
-		mService = new MenuService();
-		mService.addMenu(new Menu(btnBev04.getName()));
-		JOptionPane.showMessageDialog(null, "사이다 추가완료");
-		
-		mfList = (ArrayList<Menu>) mService.getMainFoodList();	//DB 테이블 목록 배열로 선언
-		tableMainFood.setItems(mfList);								//DB 테이블에 저장
-		
+		/*
+		 * System.out.println("사이다"); moService = new MenuService();
+		 * moService.addMenu(new Menu(btnBev04.getName()));
+		 * JOptionPane.showMessageDialog(null, "사이다 추가완료");
+		 * 
+		 * mofList = (ArrayList<Menu>) moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
+		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
+		 */		
 	}
 	
 }

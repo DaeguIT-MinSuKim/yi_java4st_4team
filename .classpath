@@ -16,8 +16,8 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="D:/workspace/worspace_web/yi_java4st_4team/WebContent/WEB-INF/lib/jcalendar-1.4.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/worspace_web/yi_java4st_4team/WebContent/WEB-INF/lib/jstl-1.2.jar"/>
-	<classpathentry kind="lib" path="D:/workspace/worspace_web/yi_java4st_4team/WebContent/WEB-INF/lib/ojdbc8-19.7.0.0.jar"/>
+	<classpathentry kind="lib" path="E:/workspace/yi_java4st_4team/WebContent/WEB-INF/lib/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="E:/workspace/yi_java4st_4team/WebContent/WEB-INF/lib/jstl-1.2.jar"/>
+	<classpathentry kind="lib" path="E:/workspace/yi_java4st_4team/WebContent/WEB-INF/lib/ojdbc8-19.7.0.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

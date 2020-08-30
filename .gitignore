@@ -1,6 +1,6 @@
 
 /build/
-
+/.classpath
 /.project
 /.settings/
 
@@ -107,7 +107,7 @@ local.properties
 .mtj.tmp/
 
 # Package Files #
-#*.jar
+*.jar
 *.war
 *.nar
 *.ear
@@ -160,4 +160,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,windows,dbeaver,java,web,git
+
 

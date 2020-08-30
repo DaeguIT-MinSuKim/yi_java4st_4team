@@ -70,6 +70,14 @@ public class TableStructure extends JPanel {
 		lblMenuPrice = new JLabel("New label");
 		lblMenuPrice.setHorizontalAlignment(SwingConstants.CENTER);
 		pMenuPrice.add(lblMenuPrice);
+	}
+
+	public void setTableNo(String string) {
+		lblTableNo.setText(string);
 	}	
+	
+	public String getTableNo() {
+		return lblTableNo.getText().substring(2);
+	}
 
 }

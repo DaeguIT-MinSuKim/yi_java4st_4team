@@ -12,7 +12,7 @@ public class SelectedMenuOrderTable extends AbstractMainTableMenu<MenuOrder> {
 
 	@Override
 	Object[] getColName() {		
-		return new String[] {"테이블번호", "메뉴코드", "주문날짜", "수량", "결제여부"};
+		return new String[] {"테이블번호", "메뉴이름", "가격", "수량", "결제여부"};
 	}
 
 	@Override

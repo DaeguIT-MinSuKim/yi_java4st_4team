@@ -794,10 +794,12 @@ public class FramePos extends JFrame implements ActionListener, MouseListener {
 
 	// 메인메뉴에 대한 버튼기능
 	protected void mousePressedMbtn01(MouseEvent e) {
-		System.out.println("뼈해장국"); // 콘솔창에서 확인
+		System.out.println("뼈해장국"); // 콘솔창에서 확인		
 		moService = new MenuOrderService(); // 기능쓰겟다고 선언
-		moService.addMenuOrder(new MenuOrder(btnMain01.getName()));
+		table = new SelectedMenuOrderTable();
 		
+		
+		moService.addMenuOrder(new MenuOrder(btnMain01.getName()));
 		
 		
 		JOptionPane.showMessageDialog(null, "뼈해장국 추가완료");

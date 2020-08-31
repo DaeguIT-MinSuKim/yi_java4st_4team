@@ -9,8 +9,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import yi_java4st_4team.dao.Impl.TableInfoDaoImpl;
-import yi_java4st_4team.dto.TableInfo;
+import yi_java4st_4team.menuTable.dao.Impl.TableInfoDaoImpl;
+import yi_java4st_4team.menuTable.dto.TableInfo;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TableInfoDaoTest {

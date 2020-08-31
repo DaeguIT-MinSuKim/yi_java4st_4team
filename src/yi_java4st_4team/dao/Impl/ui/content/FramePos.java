@@ -832,7 +832,8 @@ public class FramePos extends JFrame implements ActionListener, MouseListener {
 		 * 
 		 * mofList = (ArrayList<Menu>) moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
 		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
-		 */ }
+		 */
+	}
 
 	private void mousePressedbtnSub01(MouseEvent e) {
 		/*

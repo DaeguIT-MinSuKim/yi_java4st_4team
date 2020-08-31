@@ -11,8 +11,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import yi_java4st_4team.dao.Impl.MenuOrderDaoImpl;
-import yi_java4st_4team.dto.MenuOrder;
+import yi_java4st_4team.menuTable.dao.Impl.MenuOrderDaoImpl;
+import yi_java4st_4team.menuTable.dto.MenuOrder;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MenuOrderDaoTest {

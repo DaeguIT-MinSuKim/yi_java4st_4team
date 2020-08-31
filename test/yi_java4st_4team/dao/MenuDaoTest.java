@@ -9,8 +9,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import yi_java4st_4team.dao.Impl.MenuDaoImpl;
-import yi_java4st_4team.dto.Menu;
+import yi_java4st_4team.menuTable.dao.Impl.MenuDaoImpl;
+import yi_java4st_4team.menuTable.dto.Menu;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

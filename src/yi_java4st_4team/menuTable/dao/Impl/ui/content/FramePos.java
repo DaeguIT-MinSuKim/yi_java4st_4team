@@ -1,4 +1,4 @@
-package yi_java4st_4team.dao.Impl.ui.content;
+package yi_java4st_4team.menuTable.dao.Impl.ui.content;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,7 +25,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import yi_java4st_4team.menuTable.dao.Impl.service.MenuOrderService;
-import yi_java4st_4team.menuTable.dao.Impl.ui.content.SelectedMenuOrderTable;
 import yi_java4st_4team.menuTable.dto.MenuOrder;
 
 @SuppressWarnings("serial")
@@ -797,9 +796,6 @@ public class FramePos extends JFrame implements ActionListener, MouseListener {
 		System.out.println("뼈해장국"); // 콘솔창에서 확인
 		moService = new MenuOrderService(); // 기능쓰겟다고 선언
 		moService.addMenuOrder(new MenuOrder(btnMain01.getName()));
-		
-		
-		
 		JOptionPane.showMessageDialog(null, "뼈해장국 추가완료");
 
 		moList = (ArrayList<MenuOrder>) moService.getMenuOrderList();
@@ -836,7 +832,8 @@ public class FramePos extends JFrame implements ActionListener, MouseListener {
 		 * 
 		 * mofList = (ArrayList<Menu>) moService.getMainFoodList(); //DB 테이블 목록 배열로 선언
 		 * tableMainFood.setItems(mofList); //DB 테이블에 저장
-		 */ }
+		 */
+	}
 
 	private void mousePressedbtnSub01(MouseEvent e) {
 		/*

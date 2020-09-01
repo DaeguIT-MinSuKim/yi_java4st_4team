@@ -50,14 +50,15 @@ public class MenuOrderDaoTest {
 	 * MenuOrderDaoImpl.getInstance().selectByOrderNo(new MenuOrder(9));
 	 * System.out.println("after : " + afterMo); Assert.assertEquals(1, res); }
 	 */
-	@Test
-	public void selectByOrderNo() {
-		System.out.println("selectByOrderNo");
-		MenuOrder smo = MenuOrderDaoImpl.getInstance().selectByOrderNo(new MenuOrder(1));
-		Assert.assertNotNull(smo);
-		System.out.println(smo);
 	
-		
-	}
+//	@Test
+//	public void selectByOrderNo() {
+//		System.out.println("selectByOrderNo");
+//		MenuOrder smo = MenuOrderDaoImpl.getInstance().selectByOrderNo(new MenuOrder(1));
+//		Assert.assertNotNull(smo);
+//		System.out.println(smo);
+//	
+//		
+//	}
 	
 }

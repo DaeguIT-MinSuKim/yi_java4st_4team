@@ -795,7 +795,6 @@ public class FramePos extends JFrame implements ActionListener, MouseListener {
 	protected void mousePressedMbtn01(MouseEvent e) {
 		System.out.println("뼈해장국"); // 콘솔창에서 확인
 		moService = new MenuOrderService(); // 기능쓰겟다고 선언
-		moService.addMenuOrder(new MenuOrder(btnMain01.getName()));
 		JOptionPane.showMessageDialog(null, "뼈해장국 추가완료");
 
 		moList = (ArrayList<MenuOrder>) moService.getMenuOrderList();

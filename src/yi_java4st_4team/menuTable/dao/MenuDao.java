@@ -5,7 +5,7 @@ import java.util.List;
 import yi_java4st_4team.menuTable.dto.Menu;
 
 public interface MenuDao {
-	List<Menu> selectMenuByAll();
+	List<Menu> selectMenuByMenu(String type);
 	
 	int intsertMenu(Menu m);
 	

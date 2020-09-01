@@ -13,32 +13,35 @@ import yi_java4st_4team.menuTable.dto.Menu;
 
 public class MenuDaoImpl implements MenuDao {
 	private static final MenuDaoImpl instance = new MenuDaoImpl();
-	
-	private MenuDaoImpl() {}
-	
+
+	private MenuDaoImpl() {
+	}
+
 	public static MenuDaoImpl getInstance() {
-		return instance;		
+		return instance;
 	}
 
 	@Override
-	public List<Menu> selectMenuByAll() {		
-		String sql = "SELECT CODE, NAME, PRICE FROM MENU";
+	public List<Menu> selectMenuByMenu(String type) {		
+		String sql = "SELECT CODE, NAME, PRICE FROM MENU WHERE SUBSTR(CODE,1,1) = ?";
 		try(Connection con = JdbcUtil.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery();){
-			if(rs.next()) {
-				List<Menu> list = new ArrayList<Menu>();
-				do {
-					list.add(getMenu(rs));
-				}while(rs.next());	
-				return list;
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
+			pstmt.setString(1, type);
+			try (ResultSet rs = pstmt.executeQuery();) {
+				if (rs.next()) {
+					List<Menu> list = new ArrayList<Menu>();
+					do {
+						list.add(getMenu(rs));
+					} while (rs.next());
+					return list;
+				}
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	private Menu getMenu(ResultSet rs) throws SQLException {
 		String code = rs.getString("CODE");
 		String name = rs.getString("NAME");
@@ -46,16 +49,14 @@ public class MenuDaoImpl implements MenuDao {
 		return new Menu(code, name, price);
 	}
 
-
 	@Override
 	public int intsertMenu(Menu m) {
 		String sql = "INSERT INTO MENU VALUES(?, ?, ?)";
-		try(Connection con = JdbcUtil.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)){
-				pstmt.setString(1, m.getCode());
-				pstmt.setString(2, m.getName());
-				pstmt.setInt(3, m.getPrice());			
-				return pstmt.executeUpdate();			
+		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, m.getCode());
+			pstmt.setString(2, m.getName());
+			pstmt.setInt(3, m.getPrice());
+			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -64,8 +65,7 @@ public class MenuDaoImpl implements MenuDao {
 	@Override
 	public int updateMenu(Menu m) {
 		String sql = "UPDATE MENU SET NAME = ?, PRICE = ? WHERE CODE = ?";
-		try(Connection con = JdbcUtil.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);){	
+		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setString(1, m.getName());
 			pstmt.setInt(2, m.getPrice());
 			pstmt.setString(3, m.getCode());
@@ -73,16 +73,15 @@ public class MenuDaoImpl implements MenuDao {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-	
+
 	}
 
 	@Override
 	public int deleteMenu(Menu fd) {
 		String sql = "DELETE FROM MENU WHERE CODE = ?";
-		try(Connection con = JdbcUtil.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)){
-				pstmt.setString(1, fd.getCode());
-				return pstmt.executeUpdate();			
+		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, fd.getCode());
+			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -90,14 +89,13 @@ public class MenuDaoImpl implements MenuDao {
 
 	@Override
 	public Menu selectMenuByMenuCode(Menu m) {
-		String sql ="SELECT CODE, NAME, PRICE FROM MENU WHERE CODE = ?";
-		try(Connection con = JdbcUtil.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);){
+		String sql = "SELECT CODE, NAME, PRICE FROM MENU WHERE CODE = ?";
+		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setString(1, m.getCode());
-			try(ResultSet rs = pstmt.executeQuery()){
-				if(rs.next()) {
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
 					return getMenu(rs);
-				}				
+				}
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

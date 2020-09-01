@@ -1,7 +1,5 @@
 package yi_java4st_4team.dao;
 
-import static org.junit.Assert.fail;
-
 import java.util.List;
 
 import org.junit.Assert;
@@ -9,19 +7,24 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import yi_java4st_4team.menuTable.dao.MenuDao;
 import yi_java4st_4team.menuTable.dao.Impl.MenuDaoImpl;
 import yi_java4st_4team.menuTable.dto.Menu;
 
-
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MenuDaoTest {
+	private MenuDao dao = MenuDaoImpl.getInstance();
 
 	@Test
 	public void testSelectMenuByAll() {
 		System.out.println("testSelectMenuByAll()");
-		List<Menu> list = MenuDaoImpl.getInstance().selectMenuByAll();
-		Assert.assertNotNull(list);
-		list.stream().forEach(System.out::println);
+		String[] typeArr = { "M", "S", "B" };
+		for (String s : typeArr) {
+			List<Menu> list = dao.selectMenuByMenu(s);
+			Assert.assertNotNull(list);
+			list.stream().forEach(System.out::println);
+		}
+
 	}
 
 	@Test
@@ -38,14 +41,14 @@ public class MenuDaoTest {
 		System.out.println("test2UpdateMenu()");
 		Menu modifiyMenu = MenuDaoImpl.getInstance().selectMenuByMenuCode(new Menu("B05"));
 		System.out.println("befor : " + modifiyMenu);
-		//CODE,NAME,PRICE		
+		// CODE,NAME,PRICE
 		modifiyMenu.setName("아메리카노");
 		modifiyMenu.setPrice(4000);
 		int res = MenuDaoImpl.getInstance().updateMenu(modifiyMenu);
 		Menu afterMenu = MenuDaoImpl.getInstance().selectMenuByMenuCode(new Menu("B05"));
 		System.out.println("after : " + afterMenu);
 		Assert.assertEquals(1, res);
-		
+
 	}
 
 	@Test
@@ -54,6 +57,5 @@ public class MenuDaoTest {
 		int res = MenuDaoImpl.getInstance().deleteMenu(new Menu("B05"));
 		Assert.assertEquals(1, res);
 	}
-
 
 }

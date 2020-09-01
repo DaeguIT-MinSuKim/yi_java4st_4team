@@ -5,11 +5,14 @@ import java.util.Date;
 public class MenuOrder {
 	private TableInfo tno;
 	private Menu mCode;
+	private Menu mName;
+	private int price;
 	private Date orderday;
 	private int cnt;
 	private int isPayment;
 
-	public MenuOrder() {}
+	public MenuOrder() {
+	}
 
 	public MenuOrder(TableInfo tno, Menu mCode) {
 		super();
@@ -17,17 +20,34 @@ public class MenuOrder {
 		this.mCode = mCode;
 	}
 
-	public MenuOrder(TableInfo tno, Menu mCode, Date orderday, int cnt, int isPayment) {
+	
+	public MenuOrder(TableInfo tno, Menu mName, int price, int cnt, int isPayment) {
 		super();
 		this.tno = tno;
-		this.mCode = mCode;
-		this.orderday = orderday;
+		this.mName = mName;
+		this.price = price;
 		this.cnt = cnt;
 		this.isPayment = isPayment;
 	}
 
+	public Menu getmName() {
+		return mName;
+	}
+
+	public void setmName(Menu mName) {
+		this.mName = mName;
+	}
+
 	public TableInfo getTno() {
 		return tno;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 	public void setTno(TableInfo tno) {
@@ -68,7 +88,7 @@ public class MenuOrder {
 
 	@Override
 	public String toString() {
-		return String.format("MenuOrder [tno=%s, mCode=%s, orderday=%s, cnt=%s, isPayment=%s]", tno, mCode, orderday,
+		return String.format("MenuOrder [tno=%s, mName=%s, price=%s, cnt=%s, isPayment=%s]", tno, mName, price,
 				cnt, isPayment);
 	}
 

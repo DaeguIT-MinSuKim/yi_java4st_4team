@@ -22,9 +22,9 @@ public class SelectedMenuOrderTable extends AbstractMainTableMenu<MenuOrder> {
 	Object[] toArray(MenuOrder mo) {		
 		return new Object[] {
 				mo.getTno(),
-				mo.getmCode().getName(),
+				mo.getmName(),
 				mo.getCnt(),
-				mo.getmCode().getPrice(),
+				mo.getPrice(),
 				mo.getIsPayment()};
 	}
 

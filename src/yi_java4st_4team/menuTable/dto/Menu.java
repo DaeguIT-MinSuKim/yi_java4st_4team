@@ -8,9 +8,9 @@ public class Menu {
 	public Menu() {
 	}
 
-	public Menu(String code) {
+	public Menu(String name) {
 		super();
-		this.code = code;
+		this.name = name;
 	}
 
 	public Menu(String code, String name) {
@@ -77,7 +77,7 @@ public class Menu {
 
 	@Override
 	public String toString() {
-		return String.format("MainFood [code=%s, name=%s, price=%s]", code, name, price);
+		return String.format("%s", name);
 	}
 
 }

@@ -76,8 +76,8 @@ public class TableStructure extends JPanel {
 		lblTableNo.setText(string);
 	}	
 	
-	public String getTableNo() {
-		return lblTableNo.getText().substring(2);
+	public int getTableNo(){
+		return Integer.parseInt(lblTableNo.getText().substring(2));
 	}
 
 }

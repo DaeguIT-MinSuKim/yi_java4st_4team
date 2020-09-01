@@ -11,16 +11,18 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import yi_java4st_4team.menuTable.dao.MenuOrderDao;
 import yi_java4st_4team.menuTable.dao.Impl.MenuOrderDaoImpl;
 import yi_java4st_4team.menuTable.dto.MenuOrder;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MenuOrderDaoTest {
-
+	private MenuOrderDao dao = MenuOrderDaoImpl.getInstance();
+	
 	@Test
 	public void testSelectMeunOrderByAll() {
-		System.out.println("testSelectByAll()");
-		List<MenuOrder> list = MenuOrderDaoImpl.getInstance().selectMenuOrderByAll();
+		System.out.println("testSelectMeunOrderByAll()");
+		List<MenuOrder> list = dao.selectMenuOrderByAll();
 		Assert.assertNotNull(list);
 		list.stream().forEach(System.out::println);
 	}

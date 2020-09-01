@@ -27,7 +27,7 @@ public class MenuOrderDaoImpl implements MenuOrderDao {
 
 	@Override
 	public List<MenuOrder> selectMenuOrderByAll() {
-		String sql = "SELECT NO, CODE, ORDERDAY, CNT, ISPAYMENT FROM MENU_ORDER";
+		String sql = "SELECT T.NO, M.NAME, M.PRICE * O.CNT AS PRICE, O.CNT, O.ISPAYMENT FROM MENU M JOIN MENU_ORDER O ON (M.CODE = O.CODE) JOIN TABLEINFO T ON (T.NO = O.NO)";
 		try (Connection con = JdbcUtil.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
@@ -39,18 +39,27 @@ public class MenuOrderDaoImpl implements MenuOrderDao {
 				return list;
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			e.printStackTrace();
 		}
 		return null;
 	}
 
 	private MenuOrder getMenuOrder(ResultSet rs) throws SQLException {
+//		Menu menu = new Menu();
+//		MenuOrder mOrder = new MenuOrder();
+//		TableInfo tInfo = new TableInfo();
+//		
+//		mOrder.setTno(tInfo);
+//		mOrder.setmCode(menu);
+//		mOrder.
+//		
+//		return mOrder;
 		TableInfo tno = new TableInfo(rs.getInt("NO"));
-		Menu mCode = new Menu(rs.getString("CODE"));
-		Date orderday = rs.getTimestamp("ORDERDAY");
+		Menu mName = new Menu(rs.getString("NAME"));
+		int price = rs.getInt("PRICE");
 		int cnt = rs.getInt("CNT");
 		int isPayment = rs.getInt("ISPAYMENT");
-		return new MenuOrder(tno, mCode, orderday, cnt, isPayment);
+		return new MenuOrder(tno, mName, price, cnt, isPayment);
 	}
 
 	@Override
@@ -58,8 +67,8 @@ public class MenuOrderDaoImpl implements MenuOrderDao {
 		String sql = "INSERT INTO MENU_ORDER VALUES(?, ?, ?, ?, ?)";
 		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, mo.getTno().getNo());
-			pstmt.setString(2, mo.getmCode().getName());
-			pstmt.setTimestamp(3, new Timestamp(mo.getOrderday().getTime()));
+			pstmt.setString(2, mo.getmName().getName());
+			pstmt.setInt(3, mo.getPrice());
 			pstmt.setInt(4, mo.getCnt());
 			pstmt.setInt(5, mo.getIsPayment());
 			return pstmt.executeUpdate();

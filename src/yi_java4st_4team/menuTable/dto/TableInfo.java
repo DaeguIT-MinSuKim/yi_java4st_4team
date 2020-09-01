@@ -44,7 +44,7 @@ public class TableInfo {
 
 	@Override
 	public String toString() {
-		return String.format("TableInfo [no=%s, name=%s]", no, name);
+		return String.format("%s", no);
 	}
 	
 	

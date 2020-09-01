@@ -3,53 +3,43 @@ package yi_java4st_4team.menuTable.dto;
 import java.util.Date;
 
 public class MenuOrder {
-	private int no;
-	private String code;
+	private TableInfo tno;
+	private Menu mCode;
 	private Date orderday;
 	private int cnt;
 	private int isPayment;
-	
+
 	public MenuOrder() {}
 
-	public MenuOrder(int no) {
+	public MenuOrder(TableInfo tno, Menu mCode) {
 		super();
-		this.no = no;
+		this.tno = tno;
+		this.mCode = mCode;
 	}
 
-	public MenuOrder(String code) {
+	public MenuOrder(TableInfo tno, Menu mCode, Date orderday, int cnt, int isPayment) {
 		super();
-		this.code = code;
-	}
-
-	public MenuOrder(int no, String code) {
-		super();
-		this.no = no;
-		this.code = code;
-	}
-
-	public MenuOrder(int no, String code, Date orderday, int cnt, int isPayment) {
-		super();
-		this.no = no;
-		this.code = code;
+		this.tno = tno;
+		this.mCode = mCode;
 		this.orderday = orderday;
 		this.cnt = cnt;
 		this.isPayment = isPayment;
 	}
 
-	public int getNo() {
-		return no;
+	public TableInfo getTno() {
+		return tno;
 	}
 
-	public void setNo(int no) {
-		this.no = no;
+	public void setTno(TableInfo tno) {
+		this.tno = tno;
 	}
 
-	public String getCode() {
-		return code;
+	public Menu getmCode() {
+		return mCode;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setmCode(Menu mCode) {
+		this.mCode = mCode;
 	}
 
 	public Date getOrderday() {
@@ -78,10 +68,8 @@ public class MenuOrder {
 
 	@Override
 	public String toString() {
-		return String.format("MenuOrder [no=%s, code=%s, orderday=%s, cnt=%s, isPayment=%s]", no, code, orderday, cnt,
-				isPayment);
+		return String.format("MenuOrder [tno=%s, mCode=%s, orderday=%s, cnt=%s, isPayment=%s]", tno, mCode, orderday,
+				cnt, isPayment);
 	}
-	
-	
-	
+
 }

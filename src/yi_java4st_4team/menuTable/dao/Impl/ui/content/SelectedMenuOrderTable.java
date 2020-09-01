@@ -1,5 +1,7 @@
 package yi_java4st_4team.menuTable.dao.Impl.ui.content;
 
+import java.util.*;
+
 import javax.swing.SwingConstants;
 
 import yi_java4st_4team.menuTable.dto.MenuOrder;
@@ -19,7 +21,7 @@ public class SelectedMenuOrderTable extends AbstractMainTableMenu<MenuOrder> {
 	@Override
 	Object[] toArray(MenuOrder mo) {		
 		return new Object[] {
-				mo.getTno().getNo(),
+				mo.getTno(),
 				mo.getmCode().getName(),
 				mo.getCnt(),
 				mo.getmCode().getPrice(),

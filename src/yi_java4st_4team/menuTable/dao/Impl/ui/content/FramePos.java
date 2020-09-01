@@ -27,6 +27,9 @@ import yi_java4st_4team.menuTable.dao.Impl.service.MenuService;
 import yi_java4st_4team.menuTable.dto.Menu;
 import yi_java4st_4team.menuTable.dto.MenuOrder;
 import java.awt.FlowLayout;
+import javax.swing.JTable;
+
+
 
 @SuppressWarnings("serial")
 public class FramePos extends JFrame implements ActionListener {
@@ -56,10 +59,11 @@ public class FramePos extends JFrame implements ActionListener {
 	private JPanel panelMain;
 	private JPanel panelSub;
 	private JPanel panelBev;
-	private SelectedMenuOrderTable table;
 	private List<Menu> mList;
 	private List<Menu> sList;
 	private List<Menu> bList;
+	private SelectedMenuOrderTable table;
+	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -104,11 +108,12 @@ public class FramePos extends JFrame implements ActionListener {
 
 		scrollPane = new JScrollPane();
 		panelList.add(scrollPane, BorderLayout.CENTER);
-
-//		table = new SelectedMenuOrderTable(); // 테이블 세팅
-//		table.setItems(moList); // DB에 있는 값 불러오기
-//		scrollPane.setViewportView(table);
-
+		
+		table = new SelectedMenuOrderTable();
+		table.setItems(moList);
+		scrollPane.setViewportView(table);
+		
+		
 		panelBtns = new JPanel();
 		panel.add(panelBtns);
 		panelBtns.setLayout(new BoxLayout(panelBtns, BoxLayout.Y_AXIS));
@@ -193,6 +198,7 @@ public class FramePos extends JFrame implements ActionListener {
 //		btnBev16.setBorder(b);
 //		btnBev16.setName("B16");
 
+		
 	}
 
 	private void makeBtns(List<Menu> mList, JPanel menuPanel) {
@@ -202,7 +208,8 @@ public class FramePos extends JFrame implements ActionListener {
 			JButton btn = new JButton(btnText);
 			btn.addActionListener(this);
 //			btn.setName(name);
-			menuPanel.add(btn);
+			menuPanel.add(btn);			
+			table = new SelectedMenuOrderTable(); // 테이블 세팅
 		}
 		
 		for(int i = 0; i < 16-mList.size(); i++) {
@@ -213,7 +220,11 @@ public class FramePos extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println(e);
+		table.setItems(moList);
+		
 	}
 
+	
+	
 
 }

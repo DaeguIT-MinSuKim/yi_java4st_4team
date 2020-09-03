@@ -123,7 +123,7 @@ public class TableStructure extends JPanel {
 	}
 
 	public int getTableNo() {
-		return Integer.parseInt(lblTableNo.getText().substring(2));
+		return tInfo.getNo();
 	}
 
 }

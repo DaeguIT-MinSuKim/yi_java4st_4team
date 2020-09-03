@@ -34,7 +34,7 @@ public class StructureTest extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		TableStructure t1 = new TableStructure (new TableInfo(1));
+		TableStructure t1 = new TableStructure (new TableInfo(1, "번테이블"));
 		contentPane.add(t1);
 		
 	}

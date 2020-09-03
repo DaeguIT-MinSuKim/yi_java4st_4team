@@ -102,7 +102,7 @@ public class FramePos extends JFrame implements ActionListener {
 		panelList.add(scrollPane, BorderLayout.CENTER);
 
 		table = new SelectedMenuOrderTable();
-		table.setItems((ArrayList)moService.selectOrderByTableNo(tInfo));
+		table.setItems((ArrayList)moService.selectOrderByTableNo(tInfo));		// db에 있는 메뉴들 넣는거(주문완료 상태)
 		scrollPane.setViewportView(table);
 
 //		table = new SelectedMenuOrderTable(); // 테이블 세팅
@@ -229,6 +229,7 @@ public class FramePos extends JFrame implements ActionListener {
 
 	protected void actionPerformedBtnOrder(ActionEvent e) {
 		moList.stream().forEach(System.out::println);
+		
 	}
 	
 	

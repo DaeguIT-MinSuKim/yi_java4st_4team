@@ -96,13 +96,15 @@ public class TableStructure extends JPanel {
 	}
 
 	private void menuDp(JPanel pMenuText) {
-		for(int i = 0; i < orderList.size(); i++) {
-			
-			MenuOrder m = orderList.get(i);
-			String text = String.format("%s : %d개", m.getMenu().getName(), m.getCnt());
-			JLabel lbl = new JLabel(text);
-			lbl.setHorizontalAlignment(SwingConstants.CENTER);
-			pMenuText.add(lbl);
+		for(int i = 0; i < 3; i++) {
+			try {
+				MenuOrder m = orderList.get(i);
+				String text = String.format("%s : %d개", m.getMenu().getName(), m.getCnt());
+				JLabel lbl = new JLabel(text);
+				lbl.setHorizontalAlignment(SwingConstants.CENTER);
+				pMenuText.add(lbl);
+			} catch(IndexOutOfBoundsException e) {				
+			}
 		}
 	}
 

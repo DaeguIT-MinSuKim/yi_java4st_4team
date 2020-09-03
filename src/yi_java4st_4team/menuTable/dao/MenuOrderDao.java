@@ -14,5 +14,7 @@ public interface MenuOrderDao {
 	  int updateMenuOrder(MenuOrder mo);	 
 	
 	MenuOrder selectByOrderNo(MenuOrder mo);
+
+	List<MenuOrder> selectByOrderNo();
 	
 }

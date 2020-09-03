@@ -38,6 +38,9 @@ public class TableManagement extends JPanel {
 		setBorder(new EmptyBorder(50, 30, 50, 30));
 		setLayout(new GridLayout(0, 2, 30, 20));
 
+		for(int i = 0; i < 8; i++) {
+			TableStructure pTable = new TableStructure();
+		}
 		pTable1 = new TableStructure();
 		add(pTable1);
 		pTable1.setTableNo("No1");
@@ -97,6 +100,12 @@ public class TableManagement extends JPanel {
 			
 
 		};
+	}
+	
+	public 
+	
+	public int setRes(int res) {
+		
 	}
 
 }

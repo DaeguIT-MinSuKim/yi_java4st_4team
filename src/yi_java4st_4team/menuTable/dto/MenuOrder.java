@@ -3,63 +3,46 @@ package yi_java4st_4team.menuTable.dto;
 import java.util.Date;
 
 public class MenuOrder {
-	private TableInfo tno;
-	private Menu mCode;
-	private Menu mName;
-	private int price;
+	private TableInfo tableInfo;
+	private Menu menu;
 	private Date orderday;
 	private int cnt;
 	private int isPayment;
-
+	private int unitPrice;		// 한 메뉴의 개수에 따른 가격
+	
 	public MenuOrder() {
 	}
 
-	public MenuOrder(TableInfo tno, Menu mCode) {
+	public MenuOrder(TableInfo tableInfo, Menu menu) {
 		super();
-		this.tno = tno;
-		this.mCode = mCode;
+		this.tableInfo = tableInfo;
+		this.menu = menu;
 	}
 
-	
-	public MenuOrder(TableInfo tno, Menu mName, int price, int cnt, int isPayment) {
+	public MenuOrder(TableInfo tableInfo, Menu menu, Date orderday, int cnt, int isPayment) {
 		super();
-		this.tno = tno;
-		this.mName = mName;
-		this.price = price;
+		this.tableInfo = tableInfo;
+		this.menu = menu;
+		this.orderday = orderday;
 		this.cnt = cnt;
 		this.isPayment = isPayment;
+		this.unitPrice = this.cnt * this.menu.getPrice();
 	}
 
-	public Menu getmName() {
-		return mName;
+	public TableInfo getTableInfo() {
+		return tableInfo;
 	}
 
-	public void setmName(Menu mName) {
-		this.mName = mName;
+	public void setTableInfo(TableInfo tableInfo) {
+		this.tableInfo = tableInfo;
 	}
 
-	public TableInfo getTno() {
-		return tno;
+	public Menu getMenu() {
+		return menu;
 	}
 
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
-
-	public void setTno(TableInfo tno) {
-		this.tno = tno;
-	}
-
-	public Menu getmCode() {
-		return mCode;
-	}
-
-	public void setmCode(Menu mCode) {
-		this.mCode = mCode;
+	public void setMenu(Menu menu) {
+		this.menu = menu;
 	}
 
 	public Date getOrderday() {
@@ -86,10 +69,19 @@ public class MenuOrder {
 		this.isPayment = isPayment;
 	}
 
+	public int getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(int unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("MenuOrder [tno=%s, mName=%s, price=%s, cnt=%s, isPayment=%s]", tno, mName, price,
-				cnt, isPayment);
+		return String.format("MenuOrder [tableInfo=%s, menu=%s, orderday=%s, cnt=%s, isPayment=%s, unitPrice=%s]",
+				tableInfo, menu, orderday, cnt, isPayment, unitPrice);
 	}
+
 
 }

@@ -22,8 +22,8 @@ public class MenuOrderService {
 		dao.deleteMenuOrder(mo);
 	}
 	
-	public List<MenuOrder> selectOrderByTableNo(MenuOrder mo) {
-		return dao.selectByOrderNo(mo);
+	public List<MenuOrder> selectOrderByTableNo(TableInfo tInfo) {
+		return dao.selectOrderByTableNo(tInfo);
 		
 	}
 

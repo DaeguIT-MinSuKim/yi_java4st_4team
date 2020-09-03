@@ -3,6 +3,7 @@ package yi_java4st_4team.menuTable.dao;
 import java.util.List;
 
 import yi_java4st_4team.menuTable.dto.MenuOrder;
+import yi_java4st_4team.menuTable.dto.TableInfo;
 
 public interface MenuOrderDao {
 	List<MenuOrder> selectMenuOrderByAll();	
@@ -13,6 +14,6 @@ public interface MenuOrderDao {
 	  
 	  int updateMenuOrder(MenuOrder mo);	 
 	
-	List<MenuOrder> selectByOrderNo(MenuOrder mo);
+	List<MenuOrder> selectOrderByTableNo(TableInfo tInfo);
 
 }

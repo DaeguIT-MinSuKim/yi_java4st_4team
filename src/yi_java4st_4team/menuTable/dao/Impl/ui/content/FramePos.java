@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -85,7 +86,7 @@ public class FramePos extends JFrame implements ActionListener {
 		mList = menuService.getMenuList("M");
 		sList = menuService.getMenuList("S");
 		bList = menuService.getMenuList("B");
-		moList.add(new MenuOrder(new TableInfo(1), new Menu("뼈해장국"), 6000, 1, 0));
+		moList.add(new MenuOrder(new TableInfo(1), new Menu("M01", "뼈해장국", 6000), new Date(), 2, 0));
 		initComponents();
 	}
 
@@ -228,25 +229,15 @@ public class FramePos extends JFrame implements ActionListener {
 		if (e.getSource() == btn) {
 			System.out.println(e);
 			table.setItems(moList);
-			moList.add(new MenuOrder(new TableInfo(1), new Menu("뼈해장국"), 6000, 1, 0));
+			moList.add(new MenuOrder(new TableInfo(1), new Menu("M01", "뼈해장국", 6000), new Date(), 2, 0));
 			moList.stream().forEach(System.out::println);
 		}
 	}
 
 	protected void actionPerformedBtnOrder(ActionEvent e) {
 		moList.stream().forEach(System.out::println);
-		moService.addMenuOrder(getMenuList(moList));
 	}
 	
-	public MenuOrder getMenuList(ArrayList<MenuOrder> moList) {
-		moList.stream().forEach(System.out::println);
-		System.out.println(moList.get(0));
-		TableInfo tno = moList.get(0).getTno();
-		Menu mName = moList.get(0).getmName();
-		int price = moList.get(0).getPrice();
-		int cnt = moList.get(0).getCnt();
-		int isPayment = moList.get(0).getIsPayment();
-		return new MenuOrder(tno, mName, price, cnt, isPayment);
-	}
+	
 
 }

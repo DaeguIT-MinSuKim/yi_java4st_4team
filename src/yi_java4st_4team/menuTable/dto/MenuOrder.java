@@ -5,7 +5,7 @@ import java.util.Date;
 public class MenuOrder {
 	private TableInfo tableInfo;
 	private Menu menu;
-	private Date orderday;
+	private Date orderDay;
 	private int cnt;
 	private int isPayment;
 	private int unitPrice;		// 한 메뉴의 개수에 따른 가격
@@ -19,16 +19,25 @@ public class MenuOrder {
 		this.menu = menu;
 	}
 
+	public MenuOrder(TableInfo tableInfo, Menu menu, int cnt, int isPayment, int unitPrice) {
+		super();
+		this.tableInfo = tableInfo;
+		this.menu = menu;
+		this.cnt = cnt;
+		this.isPayment = isPayment;
+		this.unitPrice = unitPrice;
+	}
+
 	public MenuOrder(TableInfo tableInfo, Menu menu, Date orderday, int cnt, int isPayment) {
 		super();
 		this.tableInfo = tableInfo;
 		this.menu = menu;
-		this.orderday = orderday;
+		this.orderDay = orderday;
 		this.cnt = cnt;
 		this.isPayment = isPayment;
 		this.unitPrice = this.cnt * this.menu.getPrice();
 	}
-
+	
 	public TableInfo getTableInfo() {
 		return tableInfo;
 	}
@@ -46,11 +55,11 @@ public class MenuOrder {
 	}
 
 	public Date getOrderday() {
-		return orderday;
+		return orderDay;
 	}
 
 	public void setOrderday(Date orderday) {
-		this.orderday = orderday;
+		this.orderDay = orderday;
 	}
 
 	public int getCnt() {
@@ -80,7 +89,7 @@ public class MenuOrder {
 	@Override
 	public String toString() {
 		return String.format("MenuOrder [tableInfo=%s, menu=%s, orderday=%s, cnt=%s, isPayment=%s, unitPrice=%s]",
-				tableInfo, menu, orderday, cnt, isPayment, unitPrice);
+				tableInfo, menu, orderDay, cnt, isPayment, unitPrice);
 	}
 
 

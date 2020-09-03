@@ -18,10 +18,10 @@ public class SelectedMenuOrderTable extends AbstractMainTableMenu<MenuOrder> {
 	@Override
 	Object[] toArray(MenuOrder mo) {		
 		return new Object[] {
-				mo.getTno(),
-				mo.getmName(),
+				mo.getTableInfo().getNo(),
+				mo.getMenu().getName(),
 				mo.getCnt(),
-				mo.getPrice(),
+				mo.getUnitPrice(),
 				mo.getIsPayment()};
 	}
 

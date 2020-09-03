@@ -44,14 +44,19 @@ public class TableManagement extends JPanel {
 	private MouseAdapter addMouseAction() {
 		return new MouseAdapter() {
 
-			private FramePos framePos;
-
+//			private FramePos framePos;
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				framePos = new FramePos();
-				if (framePos == null) {
-					framePos = new FramePos();
-				}
+				System.out.println(e);
+				TableStructure s = (TableStructure)e.getSource();
+				System.out.println(s.gettInfo());
+				FramePos framePos = new FramePos(s.gettInfo());
+				framePos.setTitle(s.gettInfo()+"");
+//				if (framePos == null) {
+//					framePos = new FramePos();
+//				}
+				
 				framePos.setVisible(true);
 			}
 			

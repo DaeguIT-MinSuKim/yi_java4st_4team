@@ -29,9 +29,6 @@ import yi_java4st_4team.menuTable.dto.Menu;
 import yi_java4st_4team.menuTable.dto.MenuOrder;
 import yi_java4st_4team.menuTable.dto.TableInfo;
 
-import java.awt.FlowLayout;
-import javax.swing.JTable;
-
 @SuppressWarnings("serial")
 public class FramePos extends JFrame implements ActionListener {
 
@@ -41,7 +38,7 @@ public class FramePos extends JFrame implements ActionListener {
 	private JPanel panelList;
 	private JTabbedPane tabbedPane;
 	private JScrollPane scrollPane;
-	private ArrayList<MenuOrder> moList = new ArrayList<MenuOrder>();
+	private ArrayList<MenuOrder> moList;
 	private MenuService menuService;
 	private MenuOrderService moService;
 	private JPanel panelBtns;
@@ -65,29 +62,23 @@ public class FramePos extends JFrame implements ActionListener {
 	private List<Menu> sList;
 	private List<Menu> bList;
 	private JButton btn;
+	private TableInfo tInfo;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FramePos frame = new FramePos();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public FramePos() {
+	public FramePos(TableInfo tInfo) {
+		this.tInfo = tInfo;
 		moService = new MenuOrderService(); // DB 테이블 셋팅
 //		moList = (ArrayList<MenuOrder>) moService.getMenuOrderList();	//DB 테이블 목록 배열로 선언
 		menuService = new MenuService();
 		mList = menuService.getMenuList("M");
 		sList = menuService.getMenuList("S");
 		bList = menuService.getMenuList("B");
+		//// 테스트용 ///////////////////////////////////////////
+		moList = new ArrayList<MenuOrder>();
 		moList.add(new MenuOrder(new TableInfo(1), new Menu("M01", "뼈해장국", 6000), new Date(), 2, 0));
+		//////////////////////////////////////////////////////
 		initComponents();
+		
+		System.out.println(tInfo);
 	}
 
 	private void initComponents() {
@@ -111,7 +102,7 @@ public class FramePos extends JFrame implements ActionListener {
 		panelList.add(scrollPane, BorderLayout.CENTER);
 
 		table = new SelectedMenuOrderTable();
-		table.setItems(moList);
+		table.setItems((ArrayList)moService.selectOrderByTableNo(tInfo));
 		scrollPane.setViewportView(table);
 
 //		table = new SelectedMenuOrderTable(); // 테이블 세팅
@@ -227,7 +218,13 @@ public class FramePos extends JFrame implements ActionListener {
 		}
 		
 		if (e.getSource() == btn) {
-		
+
+			System.out.println(e);
+			table.setItems(moList);
+			moList = new ArrayList<MenuOrder>();
+			moList.add(new MenuOrder(new TableInfo(1), new Menu("M01", "뼈해장국", 6000), new Date(), 2, 0));
+//			moList.stream().forEach(System.out::println);
+			
 		}
 	}
 

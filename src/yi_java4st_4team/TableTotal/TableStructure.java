@@ -118,12 +118,12 @@ public class TableStructure extends JPanel {
 
 	}
 
-	public void setTableNo(String string) {
-		lblTableNo.setText(string);
-	}
-
-	public int getTableNo() {
-		return tInfo.getNo();
-	}
+//	public void setTableNo(String string) {
+//		lblTableNo.setText(string);
+//	}
+//
+//	public int getTableNo() {
+//		return tInfo.getNo();
+//	}
 
 }

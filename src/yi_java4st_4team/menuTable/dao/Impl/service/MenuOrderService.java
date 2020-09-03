@@ -24,7 +24,6 @@ public class MenuOrderService {
 	
 	public List<MenuOrder> selectOrderByTableNo(TableInfo tInfo) {
 		return dao.selectOrderByTableNo(tInfo);
-		
 	}
 
 }

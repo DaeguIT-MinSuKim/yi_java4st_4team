@@ -218,7 +218,6 @@ public class FramePos extends JFrame implements ActionListener {
 		}
 		
 		if (e.getSource() == btn) {
-
 			System.out.println(e);
 			table.setItems(moList);
 			moList = new ArrayList<MenuOrder>();
@@ -229,8 +228,6 @@ public class FramePos extends JFrame implements ActionListener {
 	}
 
 	protected void actionPerformedBtnOrder(ActionEvent e) {
-		moList.add(new MenuOrder(new TableInfo(1), new Menu("M01", "뼈해장국", 6000), new Date(), 2, 0));
-		table.setItems(moList);
 		moList.stream().forEach(System.out::println);
 	}
 	

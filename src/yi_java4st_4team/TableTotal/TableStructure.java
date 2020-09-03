@@ -3,8 +3,6 @@ package yi_java4st_4team.TableTotal;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -14,8 +12,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
 import yi_java4st_4team.menuTable.dao.Impl.service.MenuOrderService;
-import yi_java4st_4team.menuTable.dao.Impl.service.TableInfoService;
-import yi_java4st_4team.menuTable.dto.Menu;
 import yi_java4st_4team.menuTable.dto.MenuOrder;
 import yi_java4st_4team.menuTable.dto.TableInfo;
 
@@ -100,7 +96,8 @@ public class TableStructure extends JPanel {
 	}
 
 	private void menuDp(JPanel pMenuText) {
-		for(int i = 0; i < 3; i++) {
+		for(int i = 0; i < orderList.size(); i++) {
+			
 			MenuOrder m = orderList.get(i);
 			String text = String.format("%s : %d개", m.getMenu().getName(), m.getCnt());
 			JLabel lbl = new JLabel(text);

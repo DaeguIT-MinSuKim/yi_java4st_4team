@@ -54,21 +54,21 @@ public class MenuOrderDaoImpl implements MenuOrderDao {
 //		mOrder.
 //		
 //		return mOrder;
-		TableInfo tno = new TableInfo(rs.getInt("NO"));
-		Menu mName = new Menu(rs.getString("NAME"));
-		int price = rs.getInt("PRICE");
+		TableInfo tableInfo = new TableInfo(rs.getInt("NO"), rs.getString("NAME"));
+		Menu menu = new Menu(rs.getString("CODE"), rs.getString("NAME"), rs.getInt("PRICE"));
+		Date orderDay = rs.getTimestamp("ORDERDAY");
 		int cnt = rs.getInt("CNT");
 		int isPayment = rs.getInt("ISPAYMENT");
-		return new MenuOrder(tno, mName, price, cnt, isPayment);
+		return new MenuOrder(tableInfo, menu, orderDay, cnt, isPayment);
 	}
 
 	@Override
 	public int insertMeunOrder(MenuOrder mo) {
 		String sql = "INSERT INTO MENU_ORDER VALUES(?, ?, ?, ?, ?)";
 		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setInt(1, mo.getTno().getNo());
-			pstmt.setString(2, mo.getmName().getName());
-			pstmt.setInt(3, mo.getPrice());
+			pstmt.setInt(1, mo.getTableInfo().getNo());
+			pstmt.setString(2, mo.getMenu().getCode());
+			pstmt.setTimestamp(3, new Timestamp(mo.getOrderday().getTime()));
 			pstmt.setInt(4, mo.getCnt());
 			pstmt.setInt(5, mo.getIsPayment());
 			return pstmt.executeUpdate();
@@ -82,7 +82,7 @@ public class MenuOrderDaoImpl implements MenuOrderDao {
 	public int deleteMenuOrder(MenuOrder mo) {
 		String sql = "DELETE FROM MENU_ORDER WHERE NO = ?";
 		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setInt(1, mo.getTno().getNo());
+			pstmt.setInt(1, mo.getTableInfo().getNo());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -94,11 +94,11 @@ public class MenuOrderDaoImpl implements MenuOrderDao {
 	public int updateMenuOrder(MenuOrder mo) {
 		String sql = "UPDATE MENU_ORDER SET CODE=?, ORDERDAY=?, CNT=?, ISPAYMENT=? WHERE NO =?";
 		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, mo.getmCode().getName());
+			pstmt.setString(1, mo.getMenu().getCode());
 			pstmt.setTimestamp(2, new Timestamp(mo.getOrderday().getTime()));
 			pstmt.setInt(3, mo.getCnt());
 			pstmt.setInt(4, mo.getIsPayment());
-			pstmt.setInt(5, mo.getTno().getNo());
+			pstmt.setInt(5, mo.getTableInfo().getNo());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -106,19 +106,42 @@ public class MenuOrderDaoImpl implements MenuOrderDao {
 	}
 
 	@Override
-	public MenuOrder selectByOrderNo(MenuOrder mo) {
-		String sql = "SELECT * " + "FROM MENU_ORDER WHERE NO = ?";
-		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setInt(1, mo.getTno().getNo());
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					return getMenuOrder(rs);
+	public List<MenuOrder> selectByOrderNo(MenuOrder mo) {
+		String sql = "SELECT NO, CODE, ORDERDAY, CNT, ISPAYMENT FROM MENU_ORDER WHERE NO = ?";
+		try(Connection con = JdbcUtil.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1, mo.getTableInfo().getNo());
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					List<MenuOrder> list = new ArrayList<MenuOrder>();
+					do{
+						list.add(getMenuOrder(rs));
+					}while(rs.next());
+					return list;
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
+		
 	}
+
+	// List가 아니라 MenuOrder 하나만 리턴.
+//	@Override
+//	public MenuOrder selectByOrderNo(MenuOrder mo) {
+//		String sql = "SELECT * " + "FROM MENU_ORDER WHERE NO = ?";
+//		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+//			pstmt.setInt(1, mo.getTno().getNo());
+//			try (ResultSet rs = pstmt.executeQuery()) {
+//				if (rs.next()) {
+//					return getMenuOrder(rs);
+//				}
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
 
 }

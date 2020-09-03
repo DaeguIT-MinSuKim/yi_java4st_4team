@@ -6,7 +6,6 @@ public class TableInfo {
 	
 	public TableInfo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	

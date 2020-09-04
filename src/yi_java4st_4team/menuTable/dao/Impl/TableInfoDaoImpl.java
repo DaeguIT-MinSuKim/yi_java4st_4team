@@ -23,7 +23,7 @@ public class TableInfoDaoImpl implements TableInfoDao {
 
 	@Override
 	public List<TableInfo> selectTableInfoByAll() {
-		String sql = "SELECT NO, NAME FROM TABLEINFO";
+		String sql = "SELECT NO, NAME FROM TABLEINFO ORDER BY NO";
 		try(Connection con = JdbcUtil.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery();){

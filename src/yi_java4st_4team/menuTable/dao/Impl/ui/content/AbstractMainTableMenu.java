@@ -105,11 +105,22 @@ public abstract class AbstractMainTableMenu<T> extends JTable {
 		itemList.set(idx, updateItem);
 		model.removeRow(idx);
 		model.insertRow(idx, toArray(updateItem));
+	}	
+	
+	public void removeOrderAll() {
+		itemList.clear();
+		setItems(itemList);
+	}
+	
+	public void selectedRemoveRow(int idx, T removeRow) {
+		itemList.set(idx, removeRow);
+		model.removeRow(idx);
 	}
 	
 	public ArrayList<T> getItemList() {
 		return itemList;
 	}
+	
 
 	
 }

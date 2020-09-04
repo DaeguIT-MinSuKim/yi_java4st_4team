@@ -73,7 +73,7 @@ public class PayTotalTable extends JTable {
 	}
 	
 	private Object[] toArray(MenuOrder mo) {
-		return new Object[] { 
+		return new Object[] {
 				mo.getTableInfo().getNo(),
 				mo.getMenu().getName(),
 				mo.getCnt(),

@@ -228,7 +228,7 @@ public class FramePos extends JFrame implements ActionListener {
 	}
 
 	protected void actionPerformedBtnOrder(ActionEvent e) {
-		moList.stream().forEach(System.out::println);
+//		moService.addMenuOrder();
 		
 	}
 	

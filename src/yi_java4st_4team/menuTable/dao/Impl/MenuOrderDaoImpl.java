@@ -43,8 +43,17 @@ public class MenuOrderDaoImpl implements MenuOrderDao {
 		}
 		return null;
 	}
-
-
+	
+	private MenuOrder getMenuOrder(ResultSet rs) throws SQLException {
+		TableInfo tableInfo = new TableInfo(rs.getInt("NO"), rs.getString("TNAME"));
+		System.out.println(tableInfo.getName() + " " + tableInfo.getNo());
+		Menu menu = new Menu(rs.getString("CODE"), rs.getString("MNANE"), rs.getInt("PRICE"));
+		System.out.println(menu.getCode() + " " + menu.getName() + " " + menu.getPrice());
+		Date orderDay = rs.getTimestamp("ORDERDAY");
+		int cnt = rs.getInt("CNT");
+		int isPayment = rs.getInt("ISPAYMENT");
+		return new MenuOrder(tableInfo, menu, orderDay, cnt, isPayment);
+	}
 
 	@Override
 	public int insertMeunOrder(MenuOrder mo) {
@@ -88,29 +97,18 @@ public class MenuOrderDaoImpl implements MenuOrderDao {
 		}
 		return 0;
 	}
-	
-	private MenuOrder getMenuOrder(ResultSet rs) throws SQLException {
-		TableInfo tableInfo = new TableInfo(rs.getInt("NO"), rs.getString("TNAME"));
-		Menu menu = new Menu(rs.getString("CODE"), rs.getString("MNANE"), rs.getInt("PRICE"));
-		System.out.println(menu.getCode() + " " + menu.getName() + " " + menu.getPrice());
-		Date orderDay = rs.getTimestamp("ORDERDAY");
-		int cnt = rs.getInt("CNT");
-		int isPayment = rs.getInt("ISPAYMENT");
-		return new MenuOrder(tableInfo, menu, orderDay, cnt, isPayment);
-	}
-	
+
 	@Override
 	public List<MenuOrder> selectOrderByTableNo(TableInfo tInfo) {
 		String sql = "SELECT o.NO AS NO, o.CODE AS CODE, ORDERDAY, CNT, ISPAYMENT, m.NAME AS MNANE, PRICE, t.NAME AS TNAME FROM MENU_ORDER o JOIN MENU m ON o.CODE = m.CODE JOIN TABLEINFO t ON o.NO = t.NO WHERE o.NO = ?";
-		try(Connection con = JdbcUtil.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)){
+		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, tInfo.getNo());
-			try(ResultSet rs = pstmt.executeQuery()){
-				if(rs.next()) {
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
 					List<MenuOrder> list = new ArrayList<MenuOrder>();
-					do{
+					do {
 						list.add(getMenuOrder(rs));
-					}while(rs.next());
+					} while (rs.next());
 					return list;
 				}
 			}
@@ -118,10 +116,40 @@ public class MenuOrderDaoImpl implements MenuOrderDao {
 			e.printStackTrace();
 		}
 		return null;
-		
+
 	}
 
-	// List가 아니라 MenuOrder 하나만 리턴.
+	@Override
+	public List<MenuOrder> selectSellAllByAll() {
+		String sql = "SELECT ROW_NUMBER() OVER (ORDER BY SUM(CNT) * PRICE DESC) AS RANK,"
+				+ " SUM(CNT) AS HISAL, NAME, SUM(CNT) * PRICE AS SUMPRICE, ROUND(100 * (SUM(CNT) * PRICE)/(SELECT SUM(PRICE * CNT) AS SUMALL"
+				+ " FROM MENU M LEFT OUTER JOIN MENU_ORDER O ON M.CODE = O.CODE), 2) AS PERCENTAGE"
+				+ " FROM MENU_ORDER O LEFT OUTER JOIN MENU M ON O.CODE = M.CODE GROUP BY NAME, PRICE";
+		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					List<MenuOrder> list = new ArrayList<MenuOrder>();
+					do {
+						list.add(getMenuOrderPer(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private MenuOrder getMenuOrderPer(ResultSet rs) throws SQLException {
+		Menu menu = new Menu(rs.getString("CODE"), rs.getString("NANE"), rs.getInt("PRICE"));
+		Date orderDay = rs.getTimestamp("ORDERDAY");
+		int cnt = rs.getInt("CNT");
+		int isPayment = rs.getInt("ISPAYMENT");
+		return new MenuOrder(menu, orderDay, cnt, isPayment);
+	}
+
+//		 List가 아니라 MenuOrder 하나만 리턴.
 //	@Override
 //	public MenuOrder selectByOrderNo(MenuOrder mo) {
 //		String sql = "SELECT * " + "FROM MENU_ORDER WHERE NO = ?";

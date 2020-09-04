@@ -25,5 +25,9 @@ public class MenuOrderService {
 	public List<MenuOrder> selectOrderByTableNo(TableInfo tInfo) {
 		return dao.selectOrderByTableNo(tInfo);
 	}
+	
+	public List<MenuOrder> selectSellAllByAll(){
+		return dao.selectSellAllByAll();
+	}
 
 }

@@ -28,6 +28,16 @@ public class MenuOrder {
 		this.unitPrice = unitPrice;
 	}
 
+	public MenuOrder(Menu menu, Date orderDay, int cnt, int isPayment) {
+		super();
+		this.menu = menu;
+		this.orderDay = orderDay;
+		this.cnt = cnt;
+		this.isPayment = isPayment;
+	}
+	
+	
+
 	public MenuOrder(TableInfo tableInfo, Menu menu, Date orderday, int cnt, int isPayment) {
 		super();
 		this.tableInfo = tableInfo;

@@ -101,7 +101,7 @@ public class MenuOrderDaoImpl implements MenuOrderDao {
 	
 	@Override
 	public List<MenuOrder> selectOrderByTableNo(TableInfo tInfo) {
-		String sql = "SELECT o.NO AS NO, o.CODE AS CODE, ORDERDAY, CNT, ISPAYMENT, m.NAME AS MNANE, PRICE, t.NAME AS TNAME FROM MENU_ORDER o JOIN MENU m ON o.CODE = m.CODE JOIN TABLEINFO t ON o.NO = t.NO WHERE o.NO = ?";
+		String sql = "SELECT o.NO AS NO, o.CODE AS CODE, ORDERDAY, CNT, ISPAYMENT, m.NAME AS MNANE, PRICE, t.NAME AS TNAME FROM MENU_ORDER o JOIN MENU m ON o.CODE = m.CODE JOIN TABLEINFO t ON o.NO = t.NO WHERE o.NO = ? AND ISPAYMENT = 0";
 		try(Connection con = JdbcUtil.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setInt(1, tInfo.getNo());

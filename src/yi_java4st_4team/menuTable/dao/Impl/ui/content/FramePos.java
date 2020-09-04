@@ -2,7 +2,6 @@ package yi_java4st_4team.menuTable.dao.Impl.ui.content;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -61,8 +60,9 @@ public class FramePos extends JFrame implements ActionListener {
 	private List<Menu> mList;
 	private List<Menu> sList;
 	private List<Menu> bList;
-	private JButton btn;
 	private TableInfo tInfo;
+	private MenuOrder mo;
+	private TableInfo tableInfo;
 
 	public FramePos(TableInfo tInfo) {
 		this.tInfo = tInfo;
@@ -74,7 +74,7 @@ public class FramePos extends JFrame implements ActionListener {
 		bList = menuService.getMenuList("B");
 		//// 테스트용 ///////////////////////////////////////////
 		moList = new ArrayList<MenuOrder>();
-		moList.add(new MenuOrder(new TableInfo(1), new Menu("M01", "뼈해장국", 6000), new Date(), 2, 0));
+//		moList.add(new MenuOrder(new TableInfo(1), new Menu("M01", "뼈해장국", 6000), new Date(), 2, 0));
 		//////////////////////////////////////////////////////
 		initComponents();
 		
@@ -101,13 +101,12 @@ public class FramePos extends JFrame implements ActionListener {
 		scrollPane = new JScrollPane();
 		panelList.add(scrollPane, BorderLayout.CENTER);
 
+		ArrayList<MenuOrder> initMenuOrder = new ArrayList<MenuOrder>();
 		table = new SelectedMenuOrderTable();
-		table.setItems((ArrayList)moService.selectOrderByTableNo(tInfo));		// db에 있는 메뉴들 넣는거(주문완료 상태)
-		scrollPane.setViewportView(table);
 
-//		table = new SelectedMenuOrderTable(); // 테이블 세팅
-//		table.setItems(moList); // DB에 있는 값 불러오기
-//		scrollPane.setViewportView(table);
+//		table.setItems((ArrayList)moService.selectOrderByTableNo(tInfo));//테이블 뜨는지 db에서 값 불러와서 셋팅
+		table.setItems(initMenuOrder);		
+		scrollPane.setViewportView(table);
 
 		panelBtns = new JPanel();
 		panel.add(panelBtns);
@@ -194,42 +193,122 @@ public class FramePos extends JFrame implements ActionListener {
 //		btnBev16.setName("B16");
 
 	}
+	
+	
+	
+	
 
 	private void makeBtns(List<Menu> mList, JPanel menuPanel) {
 		for (int i = 0; i < mList.size(); i++) {
 			Menu m = mList.get(i);
 			String btnText = String.format("<html>%s<br>%d<html>", m.getName(), m.getPrice());
-			btn = new JButton(btnText);
+			JButton btn = new JButton(btnText);
+			btn.setName(m.getCode());
 			btn.addActionListener(this);
 //			btn.setName(name);
 			menuPanel.add(btn);
-			btn.setName(String.format("%s", i));
+//			btn.setName(String.format("%s", i));
+			
 		}
 
 		for (int i = 0; i < 16 - mList.size(); i++) {
 			menuPanel.add(new JButton());
 		}
 	}
+	/*
+	 * 
+	 * //걍 시도해봣음.... 안되네..ㅠㅠ private void infoBtns(List<MenuOrder> moList, JPanel
+	 * menuPanel) { for(int j=0; j< moList.size(); j++) { ArrayList<MenuOrder> list
+	 * = new ArrayList<MenuOrder>(); List<MenuOrder> res =
+	 * moService.getMenuOrderList(); for(MenuOrder mo : res) btn.
+	 * btn.addActionListener(this); menuPanel.add(btn);
+	 * btn.setName(String.format("%s", j)); } }
+	 * 
+	 * 
+	 */
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnOrder) {
 			actionPerformedBtnOrder(e);
-		}
-		
-		if (e.getSource() == btn) {
-			System.out.println(e);
-			table.setItems(moList);
-			moList = new ArrayList<MenuOrder>();
-			moList.add(new MenuOrder(new TableInfo(1), new Menu("M01", "뼈해장국", 6000), new Date(), 2, 0));
-//			moList.stream().forEach(System.out::println);
+			
+		}else {
+			actionPerformedBtn(e);
+			
+//			System.out.println(e);			
+			/*테스트
+			 * table.setItems(moList); moList = new ArrayList<MenuOrder>(); moList.add(new
+			 * MenuOrder(new TableInfo(1), new Menu("M01", "뼈해장국", 6000), new Date(), 2,
+			 * 0)); moList.stream().forEach(System.out::println);
+			 */
 			
 		}
 	}
 
+	protected void actionPerformedBtn(ActionEvent e) {
+		System.out.println(e);
+		JButton btn = (JButton) e.getSource();
+//		System.out.println("aaaaaaaaaaaaa" + btn.getName());
+		Menu menu = new Menu(btn.getName());
+		Menu addMenu = null;
+		if (mList.contains(menu)) {
+			addMenu = mList.get(mList.indexOf(menu));
+		}else if (sList.contains(menu)) {
+			addMenu = sList.get(sList.indexOf(menu));
+		}else {
+			addMenu = bList.get(bList.indexOf(menu));
+		}
+		System.out.println("addMenu : " + addMenu);
+		
+		ArrayList<MenuOrder> orderedList = table.getItemList();
+		orderedList.stream().forEach(System.out::println);
+		
+		MenuOrder newOrder = new MenuOrder(tInfo, addMenu, 1, 1, 0);
+		if (orderedList.contains(newOrder)) {
+			//같은 메뉴 추가 주문
+			MenuOrder beforeOrder = orderedList.get(orderedList.indexOf(newOrder));
+			System.out.println("선주문 내역 : " + beforeOrder);
+			int cnt  = beforeOrder.getCnt() + 1;
+			beforeOrder.setCnt(cnt);
+			table.updateRow(orderedList.indexOf(newOrder), beforeOrder);
+			
+		}else {
+			table.addRow(newOrder);
+		}
+		
+		
+//		System.out.println(" aaaa" + orderedList.contains(newOrder));
+		/*
+		 * boolean isExist = false; // 이미 추가된 메뉴 여부 for (int i = 0; i <
+		 * table.getRowCount(); i++) { // 테이블 행 개수 만큼 반복 String menuName = table.get; if
+		 * (Integer.toString(menuId).equals(Integer.toString())) { isExist = true; //
+		 * 이미추가된 메뉴 int menuCnt = (int) table.getValueAt(i, 2);
+		 * table.setValueAt(++menuCnt, i, 2); break; // } } if(!isExist) {
+		 * table.addRow(new MenuOrder(tInfo, addMenu, 1, 1, 0)); }
+		 */
+		 
+		
+/*		for(int i=0; i< table.getRowCount(); i++) {	//테이블 행 개수 만큼 반복
+			int menuCnt= (int) table.getValueAt(i, 2);
+			table.setValueAt(++menuCnt, i, 2);
+		}
+	*/
+//		int cnt = 1;
+//		int unitPrice = cnt * addMenu.getPrice();
+//		MenuOrder newOrder = new MenuOrder(tInfo, addMenu, 1, 1, 0);
+//		MenuOrder newOrder = new MenuOrder(tInfo, addMenu, cnt, menuPrice, 0);
+//		System.out.println("new Order " + newOrder);
+//		System.out.println("ddddddddddmm" + mList.contains(menu) + mList.indexOf(menu));
+//		System.out.println("ddddddddddss" + sList.contains(menu)+ sList.indexOf(menu));
+//		System.out.println("ddddddddddbb" + bList.contains(menu)+ bList.indexOf(menu));
+//		table.addRow(newOrder);
+//		table.setVisible(true);
+		
+			  
+		
+	}
 	protected void actionPerformedBtnOrder(ActionEvent e) {
 		moList.stream().forEach(System.out::println);
-		
 	}
 	
 	

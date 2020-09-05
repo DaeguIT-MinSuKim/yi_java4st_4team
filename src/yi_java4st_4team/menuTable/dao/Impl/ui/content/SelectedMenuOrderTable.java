@@ -38,6 +38,11 @@ public class SelectedMenuOrderTable extends AbstractMainTableMenu<MenuOrder> {
 		tableCellAlign(SwingConstants.RIGHT, 2,3,4);
 		
 	}
+
+
+
+
+
 	
 
 }

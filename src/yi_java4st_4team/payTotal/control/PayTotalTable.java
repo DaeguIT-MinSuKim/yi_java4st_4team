@@ -9,22 +9,22 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import yi_java4st_4team.payTotal.dto.Foods;
+import yi_java4st_4team.menuTable.dto.MenuOrder;
 
 public class PayTotalTable extends JTable {
-	private ArrayList<Foods> items;
+	private ArrayList<MenuOrder> items;
 	private CustomModel model;
 	
 	public PayTotalTable() {
 		initComponents();
 	}
 	
-	public PayTotalTable(ArrayList<Foods> items) {
+	public PayTotalTable(ArrayList<MenuOrder> items) {
 		setItems(items);
 		initComponents();
 	}
 	
-	public void setItems(ArrayList<Foods> items) {
+	public void setItems(ArrayList<MenuOrder> items) {
 		this.items = items;
 		loadData();
 	}
@@ -60,6 +60,7 @@ public class PayTotalTable extends JTable {
 
 	private Object[] getColNames() {
 		return new String[] { "순위", "품목명", "수량", "총매출", "점유율" };
+		// 순위 - (총매출 / 행 갯수) 가장 높은 값 / 품목명 - Menu(name) / 수량 - menuorder(cnt) += menuorder(cnt) / 총매출 - menuorder(cnt) * menu(price) / 점유율 - (총매출 / 행 갯수) 
 	}
 
 	//ArrayList<Foods> 의 내용을 보여주도록 변경
@@ -71,9 +72,14 @@ public class PayTotalTable extends JTable {
 		return rows;
 	}
 	
-	private Object[] toArray(Foods fds) {
-		return new Object[] { fds.getNo(), fds.getName(),
-				fds.getCount(), fds.getSell(), fds.getPercent() };
+	private Object[] toArray(MenuOrder mo) {
+		return new Object[] {
+				mo.getTableInfo().getNo(),
+				mo.getMenu().getName(),
+				mo.getCnt(),
+				mo.getUnitPrice(),
+				mo.getIsPayment()
+			};
 	}
 
 	private class CustomModel extends DefaultTableModel {

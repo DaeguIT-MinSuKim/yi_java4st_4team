@@ -319,7 +319,7 @@ public class FramePos extends JFrame implements ActionListener {
 	}
 	
 	protected void actionPerformedbtnSelectedBtnCancel(ActionEvent e) {
-				
+				System.out.println(e);
 	}
 
 }

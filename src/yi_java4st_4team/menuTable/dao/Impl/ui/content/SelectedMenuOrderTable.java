@@ -1,8 +1,8 @@
 package yi_java4st_4team.menuTable.dao.Impl.ui.content;
 
-import java.util.*;
-
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 import yi_java4st_4team.menuTable.dto.MenuOrder;
 
@@ -14,7 +14,6 @@ public class SelectedMenuOrderTable extends AbstractMainTableMenu<MenuOrder> {
 
 	@Override
 	Object[] getColName() {		
-
 		return new String[] {"테이블번호", "메뉴명", "수량", "가격", "결제여부"};
 	}
 
@@ -38,6 +37,8 @@ public class SelectedMenuOrderTable extends AbstractMainTableMenu<MenuOrder> {
 		tableCellAlign(SwingConstants.RIGHT, 2,3,4);
 		
 	}
+	
+
 
 
 

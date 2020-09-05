@@ -16,5 +16,4 @@ public interface MenuOrderDao {
 	
 	List<MenuOrder> selectOrderByTableNo(TableInfo tInfo);
 
-	List<MenuOrder> selectSellAllByAll();
 }

@@ -14,20 +14,23 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
 import yi_java4st_4team.menuTable.dao.Impl.service.MenuOrderService;
 import yi_java4st_4team.menuTable.dao.Impl.service.MenuService;
 import yi_java4st_4team.menuTable.dto.Menu;
 import yi_java4st_4team.menuTable.dto.MenuOrder;
 import yi_java4st_4team.menuTable.dto.TableInfo;
-
 
 @SuppressWarnings("serial")
 public class FramePos extends JFrame implements ActionListener {
@@ -61,11 +64,6 @@ public class FramePos extends JFrame implements ActionListener {
 	private List<Menu> mList;
 	private List<Menu> sList;
 	private List<Menu> bList;
-<<<<<<< HEAD
-
-	private JButton btn;
-=======
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_4team.git
 	private TableInfo tInfo;
 	private MenuOrder mo;
 	private TableInfo tableInfo;
@@ -83,7 +81,7 @@ public class FramePos extends JFrame implements ActionListener {
 //		moList.add(new MenuOrder(new TableInfo(1), new Menu("M01", "뼈해장국", 6000), new Date(), 2, 0));
 		//////////////////////////////////////////////////////
 		initComponents();
-		
+
 		System.out.println(tInfo);
 	}
 
@@ -111,9 +109,8 @@ public class FramePos extends JFrame implements ActionListener {
 		table = new SelectedMenuOrderTable();
 
 //		table.setItems((ArrayList)moService.selectOrderByTableNo(tInfo));//테이블 뜨는지 db에서 값 불러와서 셋팅
-		table.setItems(initMenuOrder);		
+		table.setItems(initMenuOrder);
 		scrollPane.setViewportView(table);
-
 
 		panelBtns = new JPanel();
 		panel.add(panelBtns);
@@ -124,9 +121,12 @@ public class FramePos extends JFrame implements ActionListener {
 		panelCal.setLayout(new GridLayout(1, 0, 0, 0));
 
 		btnTotalCancel = new JButton("전체취소");
+		btnTotalCancel.addActionListener(this);
+
 		panelCal.add(btnTotalCancel);
 
 		btnSelectedCancel = new JButton("선택취소");
+		btnSelectedCancel.addActionListener(this);
 		panelCal.add(btnSelectedCancel);
 
 		btnPlus = new JButton("+");
@@ -199,12 +199,7 @@ public class FramePos extends JFrame implements ActionListener {
 //		btnBev16.setBorder(b);
 //		btnBev16.setName("B16");
 
-		
 	}
-	
-	
-	
-	
 
 	private void makeBtns(List<Menu> mList, JPanel menuPanel) {
 		for (int i = 0; i < mList.size(); i++) {
@@ -216,7 +211,7 @@ public class FramePos extends JFrame implements ActionListener {
 //			btn.setName(name);
 			menuPanel.add(btn);
 //			btn.setName(String.format("%s", i));
-			
+
 		}
 
 		for (int i = 0; i < 16 - mList.size(); i++) {
@@ -237,22 +232,18 @@ public class FramePos extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
 		if (e.getSource() == btnOrder) {
 			actionPerformedBtnOrder(e);
-			
-		}else {
+		} else if (e.getSource() == btnTotalCancel) {
+			actionPerformedbtnTotalCancel(e);
+		} else if (e.getSource() == btnSelectedCancel) {
+			actionPerformedbtnSelectedBtnCancel(e);
+		} else {
 			actionPerformedBtn(e);
-			
-//			System.out.println(e);			
-			/*테스트
-			 * table.setItems(moList); moList = new ArrayList<MenuOrder>(); moList.add(new
-			 * MenuOrder(new TableInfo(1), new Menu("M01", "뼈해장국", 6000), new Date(), 2,
-			 * 0)); moList.stream().forEach(System.out::println);
-			 */
-			
 		}
 	}
+
+
 
 	protected void actionPerformedBtn(ActionEvent e) {
 		System.out.println(e);
@@ -262,30 +253,29 @@ public class FramePos extends JFrame implements ActionListener {
 		Menu addMenu = null;
 		if (mList.contains(menu)) {
 			addMenu = mList.get(mList.indexOf(menu));
-		}else if (sList.contains(menu)) {
+		} else if (sList.contains(menu)) {
 			addMenu = sList.get(sList.indexOf(menu));
-		}else {
+		} else {
 			addMenu = bList.get(bList.indexOf(menu));
 		}
 		System.out.println("addMenu : " + addMenu);
-		
+
 		ArrayList<MenuOrder> orderedList = table.getItemList();
 		orderedList.stream().forEach(System.out::println);
-		
+
 		MenuOrder newOrder = new MenuOrder(tInfo, addMenu, 1, 1, 0);
 		if (orderedList.contains(newOrder)) {
-			//같은 메뉴 추가 주문
+			// 같은 메뉴 추가 주문
 			MenuOrder beforeOrder = orderedList.get(orderedList.indexOf(newOrder));
 			System.out.println("선주문 내역 : " + beforeOrder);
-			int cnt  = beforeOrder.getCnt() + 1;
+			int cnt = beforeOrder.getCnt() + 1;
 			beforeOrder.setCnt(cnt);
 			table.updateRow(orderedList.indexOf(newOrder), beforeOrder);
-			
-		}else {
+
+		} else {
 			table.addRow(newOrder);
 		}
-		
-		
+
 //		System.out.println(" aaaa" + orderedList.contains(newOrder));
 		/*
 		 * boolean isExist = false; // 이미 추가된 메뉴 여부 for (int i = 0; i <
@@ -295,13 +285,11 @@ public class FramePos extends JFrame implements ActionListener {
 		 * table.setValueAt(++menuCnt, i, 2); break; // } } if(!isExist) {
 		 * table.addRow(new MenuOrder(tInfo, addMenu, 1, 1, 0)); }
 		 */
-		 
-		
-/*		for(int i=0; i< table.getRowCount(); i++) {	//테이블 행 개수 만큼 반복
-			int menuCnt= (int) table.getValueAt(i, 2);
-			table.setValueAt(++menuCnt, i, 2);
-		}
-	*/
+
+		/*
+		 * for(int i=0; i< table.getRowCount(); i++) { //테이블 행 개수 만큼 반복 int menuCnt=
+		 * (int) table.getValueAt(i, 2); table.setValueAt(++menuCnt, i, 2); }
+		 */
 //		int cnt = 1;
 //		int unitPrice = cnt * addMenu.getPrice();
 //		MenuOrder newOrder = new MenuOrder(tInfo, addMenu, 1, 1, 0);
@@ -312,14 +300,26 @@ public class FramePos extends JFrame implements ActionListener {
 //		System.out.println("ddddddddddbb" + bList.contains(menu)+ bList.indexOf(menu));
 //		table.addRow(newOrder);
 //		table.setVisible(true);
-		
-			  
-		
+
 	}
+
 	protected void actionPerformedBtnOrder(ActionEvent e) {
-		moList.stream().forEach(System.out::println);
+		int selIdx = table.getSelectedRow();
+		if(selIdx == - 1) {
+			JOptionPane.showMessageDialog(null, "해당 항목을 선택하세요");
+			return;
+		}
+		ArrayList<MenuOrder>moList = new ArrayList<MenuOrder>();
+		MenuOrder mo = moList.get(selIdx);
+		
+	}
+
+	protected void actionPerformedbtnTotalCancel(ActionEvent e) {
+		table.removeOrderAll();
 	}
 	
-	
+	protected void actionPerformedbtnSelectedBtnCancel(ActionEvent e) {
+				System.out.println(e);
+	}
 
 }

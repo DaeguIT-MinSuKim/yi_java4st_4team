@@ -12,11 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import yi_java4st_4team.menuTable.dao.Impl.service.MenuOrderService;
 import yi_java4st_4team.payTotal.control.PayTotalBtns;
 import yi_java4st_4team.payTotal.control.PayTotalHome;
 import yi_java4st_4team.payTotal.control.PayTotalTable;
-import yi_java4st_4team.payTotal.dto.PayTotal;
+import yi_java4st_4team.payTotal.dto.Foods;
 
 public class PayTotalFrame extends JFrame {
 
@@ -27,14 +26,37 @@ public class PayTotalFrame extends JFrame {
 	private JScrollPane scrollPane;
 	private PayTotalTable table;
 	
-	private ArrayList<PayTotal> fdsList = new ArrayList<PayTotal>();
+	private ArrayList<Foods> fdsList = new ArrayList<Foods>();
 	private JPanel panel;
 	private JPanel panel_1;
-	private MenuOrderService service;
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					PayTotalFrame frame = new PayTotalFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	public PayTotalFrame() {
-		service = new MenuOrderService();
-		table.setItems((ArrayList)service.getMenuOrderList());
+		fdsList.add(new Foods(1, "갈비탕", 15, 135000, 17.4));
+		fdsList.add(new Foods(2, "뼈해장국", 20, 120000, 15.5));
+		fdsList.add(new Foods(3, "꽁치구이", 18, 90000, 11.6));
+		fdsList.add(new Foods(4, "소주", 20, 80000, 10.3));
+		fdsList.add(new Foods(5, "사이다", 17, 68000, 8.8));
+		fdsList.add(new Foods(6, "콜라", 14, 56000, 7.2));
+		fdsList.add(new Foods(7, "제육덮밥", 9, 54000, 7.0));
+		fdsList.add(new Foods(8, "맥주", 13, 52000, 6.7));
+		fdsList.add(new Foods(9, "육개장", 7, 49000, 6.3));
+		fdsList.add(new Foods(10, "계란찜", 13, 39000, 5.0));
+		fdsList.add(new Foods(11, "계란후라이", 21, 21000, 2.7));
+		fdsList.add(new Foods(12, "공기밥", 12, 12000, 1.5));
+		
 		initComponents();
 	}
 	
@@ -72,6 +94,7 @@ public class PayTotalFrame extends JFrame {
 		
 		table = new PayTotalTable();
 		scrollPane.setViewportView(table);
+		table.setItems(fdsList);
 	}
 
 }

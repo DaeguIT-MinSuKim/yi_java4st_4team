@@ -62,13 +62,6 @@ public class MenuOrderDaoTest {
 //	
 //		
 //	}
-	
-	@Test
-	public void testSelectSellAllByAll() {
-		System.out.println("testSelectSellAllByAll");
-		List<MenuOrder> list = dao.selectSellAllByAll();
-		Assert.assertNotNull(list);
-		list.stream().forEach(System.out::println);
-	}
+
 	
 }

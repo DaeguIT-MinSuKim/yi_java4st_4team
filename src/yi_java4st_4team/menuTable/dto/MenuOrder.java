@@ -32,6 +32,7 @@ public class MenuOrder {
 		this.isPayment = isPayment;
 	}
 
+	
 	//FramePos -> 276line TEST
 	public MenuOrder(TableInfo tableInfo, Menu menu, Date orderDay, int cnt, int isPayment) {
 		super();

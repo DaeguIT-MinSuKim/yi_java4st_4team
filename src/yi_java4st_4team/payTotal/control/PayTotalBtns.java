@@ -24,47 +24,40 @@ public class PayTotalBtns extends JPanel {
 	private JDateChooser dateEnd;
 	private JLabel lblNewLabel;
 	private Date date = new Date();
-
+	/**
+	 * Create the panel.
+	 */
 	public PayTotalBtns() {
 
 		initComponents();
 	}
-
 	private void initComponents() {
 		setLayout(new BorderLayout(0, 0));
-		Dimension d = new Dimension(700, 150);
-
+		Dimension d = new Dimension(700,150);
+		
 		panel = new JPanel();
 		panel.setMinimumSize(new Dimension(700, 150));
 		add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-
+		
 		dateStart = new JDateChooser();
 		dateStart.setDateFormatString("yyyy. MM. dd");
 		dateStart.setDate(date);
 		panel.add(dateStart);
-
+		
 		lblNewLabel = new JLabel(" ~ ");
 		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 17));
 		panel.add(lblNewLabel);
-
+		
 		dateEnd = new JDateChooser();
 		dateEnd.setDateFormatString("yyyy. MM. dd");
 		dateEnd.setDate(date);
 		panel.add(dateEnd);
-
+		
 		btnAbout = new JButton("조회");
 		btnAbout.setBackground(Color.WHITE);
 		btnAbout.setForeground(Color.BLACK);
 		panel.add(btnAbout);
-	}
-
-	public JDateChooser getDateStart() {
-		return dateStart;
-	}
-
-	public JDateChooser getDateEnd() {
-		return dateEnd;
 	}
 
 }

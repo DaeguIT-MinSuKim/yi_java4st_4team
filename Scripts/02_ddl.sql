@@ -49,8 +49,8 @@ ALTER TABLE TABLEINFO
 
 /* 주문메 */
 CREATE TABLE MENU_ORDER (
-	NO NUMBER NOT NULL, /* 테이블번호 */
-	CODE char(3) NOT NULL, /* 메뉴코드 */
+	NO NUMBER , /* 테이블번호 */
+	CODE char(3) , /* 메뉴코드 */
 	ORDERDAY DATE, /* 주문날짜 */
 	CNT NUMBER, /* 수량 */
 	ISPAYMENT NUMBER(1) /* 결제여부 */

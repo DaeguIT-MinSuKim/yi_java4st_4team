@@ -3,6 +3,7 @@ package yi_java4st_4team.TableTotal;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -27,6 +28,10 @@ public class TableStructure extends JPanel {
 		service = new MenuOrderService();
 		this.tInfo = tInfo;
 		orderList = service.selectOrderByTableNo(tInfo);
+		if(orderList == null) {
+			orderList = new ArrayList<MenuOrder>();
+		}
+		System.out.println("orderList : " + orderList);
 //		orderList = new ArrayList<MenuOrder>();
 //		orderList.add(new MenuOrder(tInfo, new Menu("M01", "뼈해장국", 6000), new Date(), 3, 0));
 //		orderList.add(new MenuOrder(tInfo, new Menu("M02", "갈비탕", 9000), new Date(), 1, 0));

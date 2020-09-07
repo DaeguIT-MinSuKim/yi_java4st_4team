@@ -1,23 +1,26 @@
 package yi_java4st_4team.payment.dto;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Date;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import yi_java4st_4team.menuTable.dao.Impl.service.MenuOrderService;
+import yi_java4st_4team.menuTable.dao.Impl.ui.content.SelectedMenuOrderTable;
+import yi_java4st_4team.menuTable.dto.MenuOrder;
 import yi_java4st_4team.payment.control.PaymentPanel;
-
-import javax.swing.JButton;
-
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import javax.swing.JLabel;
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class CardFrame extends JFrame implements ActionListener {
 
@@ -28,21 +31,11 @@ public class CardFrame extends JFrame implements ActionListener {
 	private JButton btnOk;
 	private JButton btnCancel;
 	private JLabel lblHead;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CardFrame frame = new CardFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private SelectedMenuOrderTable table ;
+	private MenuOrderService moService;
+	
 	public CardFrame() {
+		moService = new MenuOrderService();
 		initComponents();
 	}
 	private void initComponents() {
@@ -94,13 +87,33 @@ public class CardFrame extends JFrame implements ActionListener {
 			actionPerformedBtnOk(e);
 		}
 	}
+	public void totalPrice(int totalPrice) {
+		pBills.setMoney(totalPrice);
+	}
 	
+	public void setTable(SelectedMenuOrderTable table) {
+		this.table = table;
+	}
+	protected void actionPerformedBtnCancel(ActionEvent e) {
+		System.out.println("취소");
+		dispose();
+	}
 	protected void actionPerformedBtnOk(ActionEvent e) {
 		System.out.println("확인");
+		JOptionPane.showMessageDialog(null, "결제완료 되었습니다.");
+		ArrayList<MenuOrder> insertMenuOrder =  table.getItemList();
+		insertMenuOrder.stream().forEach(System.out::println);
+		Date newDate = new Date();
+		for(MenuOrder mo : insertMenuOrder) {
+			System.out.println("CashFrame mo : " + mo + " tableInfo : " + mo.getTableInfo().getNo());	
+			mo.setOrderday(newDate);
+			mo.setIsPayment(1);
+			insertMenuOrder.stream().forEach(System.out::println);
+			moService.updateMenuOrder(mo);
+		}
 		dispose();
 	}
 	
-	protected void actionPerformedBtnCancel(ActionEvent e) {
-		dispose();
-	}
+	
+
 }

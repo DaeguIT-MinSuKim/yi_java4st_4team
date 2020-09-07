@@ -1,16 +1,14 @@
 package yi_java4st_4team.payment.control;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.font.TextAttribute;
-import java.util.Map;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
-import java.awt.Color;
 
 public class PaymentPanel extends JPanel {
 	private JLabel lblBill;
@@ -19,9 +17,7 @@ public class PaymentPanel extends JPanel {
 	private JLabel lbl10perNum;
 	private JLabel lblTotal;
 	private JLabel lblTotalNum;
-
-	public PaymentPanel() {
-
+	public PaymentPanel() {	
 		initComponents();
 	}
 	private void initComponents() {
@@ -37,6 +33,7 @@ public class PaymentPanel extends JPanel {
 		lblBillNum.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
 		lblBillNum.setHorizontalAlignment(SwingConstants.RIGHT);
 		add(lblBillNum);
+		 
 		
 		lbl10per = new JLabel("부 가 세");
 		lbl10per.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
@@ -57,6 +54,12 @@ public class PaymentPanel extends JPanel {
 		lblTotalNum.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(0, 0, 0)));
 		lblTotalNum.setHorizontalAlignment(SwingConstants.RIGHT);
 		add(lblTotalNum);
+	}
+	
+	public void setMoney(int totalPrice) {
+		lblBillNum.setText(String.format("%,5d", totalPrice/11*10));
+		lbl10perNum.setText(String.format("%,5d",  totalPrice/11));
+		lblTotalNum.setText(String.format("%,d",  totalPrice));
 	}
 
 }

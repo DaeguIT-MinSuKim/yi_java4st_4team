@@ -46,10 +46,34 @@ public class MenuOrderDaoImpl implements MenuOrderDao {
 
 
 
+//	@Override
+//	public int insertMeunOrder(MenuOrder mo) {
+//		String sql = "INSERT INTO MENU_ORDER VALUES(?, ?, ?, ?, ?)";
+//		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+//			pstmt.setInt(1, mo.getTableInfo().getNo());
+//			pstmt.setString(2, mo.getMenu().getCode());
+//			pstmt.setTimestamp(3, new Timestamp(mo.getOrderday().getTime()));
+//			pstmt.setInt(4, mo.getCnt());
+//			pstmt.setInt(5, mo.getIsPayment());
+//			return pstmt.executeUpdate();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return 0;
+//	}
+
 	@Override
 	public int insertMeunOrder(MenuOrder mo) {
+		System.out.println("mo~~~~~ : " + mo);
 		String sql = "INSERT INTO MENU_ORDER VALUES(?, ?, ?, ?, ?)";
-		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = JdbcUtil.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			System.out.println("테이블번호 : " +  mo.getTableInfo().getNo());
+			System.out.println("메뉴코드 : " + mo.getMenu().getCode());
+			System.out.println("주문일자 : " + new Timestamp(mo.getOrderday().getTime()));
+			System.out.println("갯수 : " + mo.getCnt());
+			System.out.println("결재여부 : " + mo.getIsPayment());
+			
 			pstmt.setInt(1, mo.getTableInfo().getNo());
 			pstmt.setString(2, mo.getMenu().getCode());
 			pstmt.setTimestamp(3, new Timestamp(mo.getOrderday().getTime()));
@@ -61,7 +85,7 @@ public class MenuOrderDaoImpl implements MenuOrderDao {
 		}
 		return 0;
 	}
-
+	
 	@Override
 	public int deleteMenuOrder(MenuOrder mo) {
 		String sql = "DELETE FROM MENU_ORDER WHERE NO = ?";
@@ -76,13 +100,24 @@ public class MenuOrderDaoImpl implements MenuOrderDao {
 
 	@Override
 	public int updateMenuOrder(MenuOrder mo) {
-		String sql = "UPDATE MENU_ORDER SET CODE=?, ORDERDAY=?, CNT=?, ISPAYMENT=? WHERE NO =?";
+		String sql = "UPDATE MENU_ORDER SET ISPAYMENT=? WHERE NO =?";
 		try (Connection con = JdbcUtil.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, mo.getMenu().getCode());
-			pstmt.setTimestamp(2, new Timestamp(mo.getOrderday().getTime()));
-			pstmt.setInt(3, mo.getCnt());
-			pstmt.setInt(4, mo.getIsPayment());
-			pstmt.setInt(5, mo.getTableInfo().getNo());
+//			pstmt.setString(1, mo.getMenu().getCode());
+//			System.out.println("1 : " + mo.getMenu().getCode());
+//			
+//			pstmt.setTimestamp(2, new Timestamp(mo.getOrderday().getTime()));
+//			System.out.println("2 : " + mo.getOrderday().getTime());
+//			
+//			pstmt.setInt(3, mo.getCnt());
+//			System.out.println("3 : " + mo.getCnt());
+//			
+			pstmt.setInt(1, mo.getIsPayment());
+			System.out.println("4 : " + mo.getIsPayment());
+			
+			pstmt.setInt(2, mo.getTableInfo().getNo());
+			System.out.println("5 : " + mo.getTableInfo().getNo());
+			return pstmt.executeUpdate();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

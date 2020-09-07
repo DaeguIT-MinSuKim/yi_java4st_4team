@@ -15,6 +15,7 @@ public class MenuOrderService {
 	}
 	
 	public void addMenuOrder(MenuOrder mo) {
+		System.out.println("MenuOrderService mo~~~~~ : " + mo);
 		dao.insertMeunOrder(mo);
 	}
 	
@@ -26,4 +27,7 @@ public class MenuOrderService {
 		return dao.selectOrderByTableNo(tInfo);
 	}
 
+	public void updateMenuOrder(MenuOrder mo) {
+		dao.updateMenuOrder(mo);
+	}
 }

@@ -16,15 +16,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
 
 import yi_java4st_4team.menuTable.dao.Impl.service.MenuOrderService;
 import yi_java4st_4team.menuTable.dao.Impl.service.MenuService;
@@ -43,7 +40,6 @@ public class FramePos extends JFrame implements ActionListener {
 	private JPanel panelList;
 	private JTabbedPane tabbedPane;
 	private JScrollPane scrollPane;
-	private ArrayList<MenuOrder> moList;
 	private MenuService menuService;
 	private MenuOrderService moService;
 	private JPanel panelBtns;
@@ -67,10 +63,9 @@ public class FramePos extends JFrame implements ActionListener {
 	private List<Menu> sList;
 	private List<Menu> bList;
 	private TableInfo tInfo;
-	private MenuOrder mo;
-	private TableInfo tableInfo;
 	private CashFrame cashFrame;
 	private CardFrame cardFrame;
+	private boolean isOrder;
 
 	public FramePos(TableInfo tInfo) {
 		this.tInfo = tInfo;
@@ -80,8 +75,7 @@ public class FramePos extends JFrame implements ActionListener {
 		mList = menuService.getMenuList("M");
 		sList = menuService.getMenuList("S");
 		bList = menuService.getMenuList("B");
-		//// 테스트용 ///////////////////////////////////////////
-		moList = new ArrayList<MenuOrder>();
+		new ArrayList<MenuOrder>();
 //		moList.add(new MenuOrder(new TableInfo(1), new Menu("M01", "뼈해장국", 6000), new Date(), 2, 0));
 		//////////////////////////////////////////////////////
 		initComponents();
@@ -164,10 +158,14 @@ public class FramePos extends JFrame implements ActionListener {
 
 		btnCash = new JButton("현금");
 		btnCash.addActionListener(this);
+		btnCash.setEnabled(isOrder);
 		panelCashCard.add(btnCash);
-
+	
+		
 		btnCard = new JButton("카드");
 		btnCard.addActionListener(this);
+		btnCard.setEnabled(isOrder);
+		
 		panelCashCard.add(btnCard);
 		
 		panelMenu = new JPanel();
@@ -251,26 +249,16 @@ public class FramePos extends JFrame implements ActionListener {
 			actionPerformedbtnMinus(e);
 		} else if (e.getSource() == btnOrder) {
 			actionPerformedBtnOrder(e);
-<<<<<<< HEAD
-		} else if (e.getSource() == btnTotalCancel) {
-			actionPerformedbtnTotalCancel(e);
-		} else if (e.getSource() == btnSelectedCancel) {
-			actionPerformedbtnSelectedBtnCancel(e);
-		} else {
-=======
 		} else if(e.getSource() == btnCash) {
 			actionPerformedbtnCash(e);
 		} else if(e.getSource() == btnCard) {
 			actionPerformedbtnCard(e);
 		}
 			else {
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_4team.git
 			actionPerformedBtn(e);
 		}
 	}
 	
-
-
 
 	protected void actionPerformedBtn(ActionEvent e) {
 		System.out.println(e);
@@ -365,7 +353,6 @@ public class FramePos extends JFrame implements ActionListener {
 		} 
 		
 	}
-
 	
 	protected void actionPerformedbtnMinus(ActionEvent e) {
 		System.out.println("-");				
@@ -384,25 +371,60 @@ public class FramePos extends JFrame implements ActionListener {
 	}
 	
 	protected void actionPerformedBtnOrder(ActionEvent e) {
-
 		int closeCorfirm = JOptionPane.showConfirmDialog(null, "주문 완료 하시겠습니까?", "주문완료", JOptionPane.YES_NO_OPTION);
 		if (closeCorfirm == JOptionPane.YES_OPTION) {
-			
+//			System.out.println(table.getItemList());
+			ArrayList<MenuOrder> insertMenuOrder =  table.getItemList();
+			System.out.println("insertMenuOrder : " + insertMenuOrder);
+			Date newDate = new Date();
+			for(MenuOrder mo : insertMenuOrder) {
+				System.out.println("mo : " + mo + " tableInfo : " + mo.getTableInfo().getNo());	
+				mo.setOrderday(newDate);
+				moService.addMenuOrder(mo);	
+			}
+			isOrder = true;
+			btnCash.setEnabled(isOrder);
+			btnCard.setEnabled(isOrder);
 		}
 	}
 	
-
 	protected void actionPerformedbtnCash(ActionEvent e) {
-		if (cashFrame == null) {
-			cashFrame = new CashFrame();
+		System.out.println("현금버튼");
+		ArrayList<MenuOrder> insertMenuOrder =  table.getItemList();	
+		int totalPrice = 0;
+		for(MenuOrder mo : insertMenuOrder) {
+			totalPrice += mo.getUnitPrice();
 		}
-		cashFrame.setVisible(true);		
+		
+		if (insertMenuOrder.size() > 0) {
+			System.out.println("insertMenuOrder.size() : " + insertMenuOrder.size());
+			cashFrame = new CashFrame();
+			cashFrame.totalPrice(totalPrice);
+			cashFrame.setTable(table);
+			cashFrame.setVisible(true);
+		}else {
+			JOptionPane.showMessageDialog(null, "주문 된 항목이 없습니다.");
+			return;
+		}
+		
 	}
 	protected void actionPerformedbtnCard(ActionEvent e) {
-		if (cardFrame == null) {
-			cardFrame = new CardFrame();
+		System.out.println("카드버튼");
+		ArrayList<MenuOrder> insertMenuOrder =  table.getItemList();			
+		int totalPrice = 0;
+		for(MenuOrder mo : insertMenuOrder) {
+			totalPrice +=mo.getUnitPrice();
 		}
-		cardFrame.setVisible(true);			
+		if (insertMenuOrder.size() > 0) {
+			System.out.println("insertMenuOrder.size() : " + insertMenuOrder.size());
+			cardFrame = new CardFrame();
+			cardFrame.totalPrice(totalPrice);
+			cardFrame.setTable(table);
+			cardFrame.setVisible(true);
+		}else {
+			JOptionPane.showMessageDialog(null, "주문 된 항목이 없습니다.");
+			return;
+		}		
 	}
 
 

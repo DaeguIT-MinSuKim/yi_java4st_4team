@@ -83,6 +83,7 @@ public class MenuOrder {
 
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
+		this.unitPrice = this.cnt * this.menu.getPrice();
 	}
 
 	public int getIsPayment() {

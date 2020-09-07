@@ -31,6 +31,8 @@ import yi_java4st_4team.menuTable.dao.Impl.service.MenuService;
 import yi_java4st_4team.menuTable.dto.Menu;
 import yi_java4st_4team.menuTable.dto.MenuOrder;
 import yi_java4st_4team.menuTable.dto.TableInfo;
+import yi_java4st_4team.payment.dto.CardFrame;
+import yi_java4st_4team.payment.dto.CashFrame;
 
 @SuppressWarnings("serial")
 public class FramePos extends JFrame implements ActionListener {
@@ -67,6 +69,8 @@ public class FramePos extends JFrame implements ActionListener {
 	private TableInfo tInfo;
 	private MenuOrder mo;
 	private TableInfo tableInfo;
+	private CashFrame cashFrame;
+	private CardFrame cardFrame;
 
 	public FramePos(TableInfo tInfo) {
 		this.tInfo = tInfo;
@@ -130,9 +134,11 @@ public class FramePos extends JFrame implements ActionListener {
 		panelCal.add(btnSelectedCancel);
 
 		btnPlus = new JButton("+");
+		btnPlus.addActionListener(this);
 		panelCal.add(btnPlus);
 
 		btnMinus = new JButton("-");
+		btnMinus.addActionListener(this);
 		panelCal.add(btnMinus);
 
 		panelCompl = new JPanel();
@@ -157,10 +163,13 @@ public class FramePos extends JFrame implements ActionListener {
 		panelCashCard.setLayout(new GridLayout(0, 2, 0, 0));
 
 		btnCash = new JButton("현금");
+		btnCash.addActionListener(this);
 		panelCashCard.add(btnCash);
 
 		btnCard = new JButton("카드");
+		btnCard.addActionListener(this);
 		panelCashCard.add(btnCard);
+		
 		panelMenu = new JPanel();
 		contentPane.add(panelMenu);
 		panelMenu.setLayout(new BoxLayout(panelMenu, BoxLayout.Y_AXIS));
@@ -232,16 +241,34 @@ public class FramePos extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnOrder) {
+		if (e.getSource() == btnTotalCancel) {
+			actionPerformedbtnTotalCancel(e);
+		} else if (e.getSource() == btnSelectedCancel) {
+			actionPerformedbtnSelectedBtnCancel(e);
+		} else if (e.getSource() == btnPlus) {
+			actionPerformedbtnPlus(e);
+		} else if (e.getSource() == btnMinus) {
+			actionPerformedbtnMinus(e);
+		} else if (e.getSource() == btnOrder) {
 			actionPerformedBtnOrder(e);
+<<<<<<< HEAD
 		} else if (e.getSource() == btnTotalCancel) {
 			actionPerformedbtnTotalCancel(e);
 		} else if (e.getSource() == btnSelectedCancel) {
 			actionPerformedbtnSelectedBtnCancel(e);
 		} else {
+=======
+		} else if(e.getSource() == btnCash) {
+			actionPerformedbtnCash(e);
+		} else if(e.getSource() == btnCard) {
+			actionPerformedbtnCard(e);
+		}
+			else {
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_4team.git
 			actionPerformedBtn(e);
 		}
 	}
+	
 
 
 
@@ -303,23 +330,80 @@ public class FramePos extends JFrame implements ActionListener {
 
 	}
 
-	protected void actionPerformedBtnOrder(ActionEvent e) {
-		int selIdx = table.getSelectedRow();
-		if(selIdx == - 1) {
-			JOptionPane.showMessageDialog(null, "해당 항목을 선택하세요");
-			return;
-		}
-		ArrayList<MenuOrder>moList = new ArrayList<MenuOrder>();
-		MenuOrder mo = moList.get(selIdx);
-		
-	}
-
 	protected void actionPerformedbtnTotalCancel(ActionEvent e) {
-		table.removeOrderAll();
+		System.out.println("전체삭제");
+		int closeCorfirm = JOptionPane.showConfirmDialog(null, "정말 전체삭제 하시겠습니까?", "전체주문 취소", JOptionPane.YES_NO_OPTION);
+		if (closeCorfirm == JOptionPane.YES_OPTION) {
+			table.removeOrderAll();
+			JOptionPane.showMessageDialog(null, "전체 주문리스트 삭제완료!!");
+//			System.exit(0);
+		}
 	}
 	
 	protected void actionPerformedbtnSelectedBtnCancel(ActionEvent e) {
-				System.out.println(e);
+		System.out.println("선택삭제");
+		int selIdx = table.getSelectedRow();		
+		if(selIdx == - 1) {
+			JOptionPane.showMessageDialog(null, "해당 항목을 선택하세요");
+			return;
+		}	
+		System.out.println(selIdx);
+		table.removeRow(selIdx);
+		JOptionPane.showMessageDialog(null, "해당 주문 리스트 삭제완료!!");
 	}
+	
+	protected void actionPerformedbtnPlus(ActionEvent e) {
+		System.out.println("+");
+		int selIdx = table.getSelectedRow();
+		if(selIdx == -1) {
+			JOptionPane.showMessageDialog(null, "해당 항목을 선택하세요");
+			return;
+		}else {				
+			int menuCount = (int) table.getValueAt(selIdx, 2);			
+			System.out.println(menuCount);
+			table.setValueAt(++menuCount, selIdx, 2);
+		} 
+		
+	}
+
+	
+	protected void actionPerformedbtnMinus(ActionEvent e) {
+		System.out.println("-");				
+		int selIdx = table.getSelectedRow();
+		if(selIdx == -1) {
+			JOptionPane.showMessageDialog(null, "해당 항목을 선택하세요");
+			return;
+		}else {
+		int menuCount = (int)table.getValueAt(selIdx, 2);
+		if(menuCount == 1) {
+			table.removeRow(selIdx);			
+		}else if(menuCount > 0){
+			table.setValueAt(--menuCount, selIdx, 2);
+		}
+		}
+	}
+	
+	protected void actionPerformedBtnOrder(ActionEvent e) {
+
+		int closeCorfirm = JOptionPane.showConfirmDialog(null, "주문 완료 하시겠습니까?", "주문완료", JOptionPane.YES_NO_OPTION);
+		if (closeCorfirm == JOptionPane.YES_OPTION) {
+			
+		}
+	}
+	
+
+	protected void actionPerformedbtnCash(ActionEvent e) {
+		if (cashFrame == null) {
+			cashFrame = new CashFrame();
+		}
+		cashFrame.setVisible(true);		
+	}
+	protected void actionPerformedbtnCard(ActionEvent e) {
+		if (cardFrame == null) {
+			cardFrame = new CardFrame();
+		}
+		cardFrame.setVisible(true);			
+	}
+
 
 }

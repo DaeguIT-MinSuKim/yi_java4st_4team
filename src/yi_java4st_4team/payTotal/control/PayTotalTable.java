@@ -1,13 +1,9 @@
 package yi_java4st_4team.payTotal.control;
 
-import java.util.ArrayList;
+import java.util.*;
 
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
+import javax.swing.*;
+import javax.swing.table.*;
 
 import yi_java4st_4team.payTotal.dto.Foods;
 

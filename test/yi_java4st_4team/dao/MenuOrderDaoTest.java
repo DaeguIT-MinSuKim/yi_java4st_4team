@@ -19,7 +19,7 @@ import yi_java4st_4team.menuTable.dto.MenuOrder;
 public class MenuOrderDaoTest {
 	private MenuOrderDao dao = MenuOrderDaoImpl.getInstance();
 	
-	@Test
+//	@Test
 	public void testSelectMeunOrderByAll() {
 		System.out.println("testSelectMeunOrderByAll()");
 		List<MenuOrder> list = dao.selectMenuOrderByAll();
@@ -62,5 +62,6 @@ public class MenuOrderDaoTest {
 //	
 //		
 //	}
+
 	
 }

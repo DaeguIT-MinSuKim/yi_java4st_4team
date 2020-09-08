@@ -14,20 +14,20 @@ public class MenuOrderService {
 		return dao.selectMenuOrderByAll();		
 	}
 	
-	public void addMenuOrder(MenuOrder mo) {
+	public int addMenuOrder(MenuOrder mo) {
 		System.out.println("MenuOrderService mo~~~~~ : " + mo);
-		dao.insertMeunOrder(mo);
+		return dao.insertMeunOrder(mo);
 	}
 	
-	public void removeMainFood(MenuOrder mo) {
-		dao.deleteMenuOrder(mo);
+	public int removeMainFood(MenuOrder mo) {
+		return dao.deleteMenuOrder(mo);
 	}
 	
 	public List<MenuOrder> selectOrderByTableNo(TableInfo tInfo) {
 		return dao.selectOrderByTableNo(tInfo);
 	}
 
-	public void updateMenuOrder(MenuOrder mo) {
-		dao.updateMenuOrder(mo);
+	public int updateMenuOrder(MenuOrder mo) {
+		return dao.updateMenuOrder(mo);
 	}
 }

@@ -94,6 +94,8 @@ public class MenuOrderDaoImpl implements MenuOrderDao {
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}catch(NullPointerException ee) {
+			ee.printStackTrace();
 		}
 		return 0;
 	}

@@ -23,6 +23,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import yi_java4st_4team.TableTotal.TableStructure;
 import yi_java4st_4team.menuTable.dao.Impl.service.MenuOrderService;
 import yi_java4st_4team.menuTable.dao.Impl.service.MenuService;
 import yi_java4st_4team.menuTable.dto.Menu;
@@ -66,6 +67,8 @@ public class FramePos extends JFrame implements ActionListener {
 	private CashFrame cashFrame;
 	private CardFrame cardFrame;
 	private boolean isOrder;
+	private MenuOrder menuOrder;
+	private List<MenuOrder> moList;
 
 	public FramePos(TableInfo tInfo) {
 		this.tInfo = tInfo;
@@ -374,6 +377,15 @@ public class FramePos extends JFrame implements ActionListener {
 		int closeCorfirm = JOptionPane.showConfirmDialog(null, "주문 완료 하시겠습니까?", "주문완료", JOptionPane.YES_NO_OPTION);
 		if (closeCorfirm == JOptionPane.YES_OPTION) {
 //			System.out.println(table.getItemList());
+			List<MenuOrder> dbList = table.getItemList();			
+			for(MenuOrder mo : dbList) {
+				System.out.println("dbList : " + mo + " tableInfo : " + mo.getTableInfo().getNo());	
+				moService.removeMainFood(dbList.get(0));
+			}
+			
+			
+			
+			
 			ArrayList<MenuOrder> insertMenuOrder =  table.getItemList();
 			System.out.println("insertMenuOrder : " + insertMenuOrder);
 			Date newDate = new Date();
